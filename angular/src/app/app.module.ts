@@ -39,6 +39,16 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 
+import { CategoryComponent } from './_Category/Category.component';
+import { FoodComponent } from './_Food/Food.component';
+import { DivisionComponent } from './_Division/Division.component';
+import { TypeComponent } from './_Type/Type.component';
+import { CreateFoodComponent } from './_Food/Create-Food/CreateFood.component';
+import { CategoriesServiceProxy, DivisionServiceProxy, FoodServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+
+
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -67,7 +77,13 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
         SidebarComponent,
         SidebarLogoComponent,
         SidebarUserPanelComponent,
-        SidebarMenuComponent
+        SidebarMenuComponent,
+        CategoryComponent,
+        DivisionComponent,
+        FoodComponent,
+        TypeComponent,
+        CreateFoodComponent
+
     ],
     imports: [
         CommonModule,
@@ -84,6 +100,11 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
         SharedModule,
         NgxPaginationModule,
     ],
-    providers: []
+    providers: [
+        CategoriesServiceProxy,
+        DivisionServiceProxy,
+        FoodServiceProxy,
+        TypeServiceProxy
+    ]
 })
 export class AppModule {}

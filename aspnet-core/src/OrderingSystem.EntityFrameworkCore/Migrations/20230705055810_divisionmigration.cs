@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrderingSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class divisionMigration : Migration
+    public partial class divisionmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

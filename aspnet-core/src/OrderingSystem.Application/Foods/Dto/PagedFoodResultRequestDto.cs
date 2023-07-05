@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Foods.Dto
 {
-    public class PagedFoodResultRequest : PagedResultRequestDto
+    public class PagedFoodResultRequestDto : PagedResultRequestDto
     {
         public string Keyword { get; set; }
         public bool? IsActive { get; set; }

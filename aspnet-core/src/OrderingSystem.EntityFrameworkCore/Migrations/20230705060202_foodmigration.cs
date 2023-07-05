@@ -6,18 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrderingSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class typeMigration : Migration
+    public partial class foodmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Types",
+                name: "Foods",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Availability = table.Column<bool>(type: "bit", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -28,7 +35,7 @@ namespace OrderingSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Types", x => x.Id);
+                    table.PrimaryKey("PK_Foods", x => x.Id);
                 });
         }
 
@@ -36,7 +43,7 @@ namespace OrderingSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Types");
+                name: "Foods");
         }
     }
 }

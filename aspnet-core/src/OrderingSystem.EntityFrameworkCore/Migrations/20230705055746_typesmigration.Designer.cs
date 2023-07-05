@@ -12,8 +12,8 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    [Migration("20230704012509_foodMigration")]
-    partial class foodMigration
+    [Migration("20230705055746_typesmigration")]
+    partial class typesmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1576,19 +1576,13 @@ namespace OrderingSystem.Migrations
                     b.ToTable("AbpUsers");
                 });
 
-            modelBuilder.Entity("OrderingSystem.Entities.Food", b =>
+            modelBuilder.Entity("OrderingSystem.Entities.Types", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Availability")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1602,9 +1596,6 @@ namespace OrderingSystem.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -1617,21 +1608,9 @@ namespace OrderingSystem.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Size")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Foods");
+                    b.ToTable("Types");
                 });
 
             modelBuilder.Entity("OrderingSystem.MultiTenancy.Tenant", b =>

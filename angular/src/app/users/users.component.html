@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-    <section class="content-header">
+    <!-- <section class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
@@ -13,43 +13,27 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <section class="content px-2">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">&emsp;</div>
                         <div class="col-md-6">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <button
-                                            type="button"
-                                            class="btn bg-blue"
-                                            (click)="getDataPage(1)"
-                                    >
+
+                                    <button type="button"class="btn bg-blue"(click)="getDataPage(1)">
                                         <i class="fas fa-search"></i>
                                     </button>
+
                                 </div>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        name="keyword"
-                                        [placeholder]="'SearchWithThreeDot' | localize"
-                                        [(ngModel)]="keyword"
-                                        (keyup.enter)="getDataPage(1)"
-                                />
+                                <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize"[(ngModel)]="keyword"(keyup.enter)="getDataPage(1)"/>
                                 <div class="input-group-append">
-                                    <button
-                                            type="button"
-                                            class="btn btn-default"
-                                            (click)="advancedFiltersVisible = !advancedFiltersVisible"
-                                    >
-                                        <i
-                                                class="fas"
-                                                [class.fa-angle-up]="advancedFiltersVisible"
-                                                [class.fa-angle-down]="!advancedFiltersVisible"
-                                        ></i>
+                                    
+                                    <button type="button" class="btn btn-default"(click)="advancedFiltersVisible = !advancedFiltersVisible">
+                                        <i class="fas" [class.fa-angle-up]="advancedFiltersVisible"[class.fa-angle-down]="!advancedFiltersVisible"></i>
                                     </button>
                                 </div>
                             </div>
@@ -134,7 +118,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" [busy]="isTableLoading">
@@ -148,64 +132,39 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr
-                                    *ngFor="
-                  let user of users
-                    | paginate
-                      : {
-                          id: 'server',
-                          itemsPerPage: pageSize,
-                          currentPage: pageNumber,
-                          totalItems: totalItems
-                        }
-                "
-                            >
-                                <td>{{ user.userName }}</td>
-                                <td>{{ user.fullName }}</td>
-                                <td>{{ user.emailAddress }}</td>
+                            <tr *ngFor="let user of users| paginate: {id: 'server',itemsPerPage: pageSize,currentPage: pageNumber,totalItems: totalItems}">
+                            <td>{{ user.userName }}</td>
+                            <td>{{ user.fullName }}</td>
+                            <td>{{ user.emailAddress }}</td>
+                            <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox"class="custom-control-input"disabled [checked]="user.isActive"/>
+                                <label class="custom-control-label"></label>
+                            </div>
+                            </td>
                                 <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input
-                                                type="checkbox"
-                                                class="custom-control-input"
-                                                disabled
-                                                [checked]="user.isActive"
-                                        />
-                                        <label class="custom-control-label"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-sm bg-secondary"
-                                            (click)="editUser(user)"
-                                    >
-                                        <i class="fas fa-pencil-alt"></i>
-                                        {{ "Edit" | localize }}
+                                    <!-- <button type="button" class="btn btn-sm bg-secondary" (click)="editUser(user)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    {{ "Edit" | localize }}
                                     </button>
-                                    <button
-                                            type="button"
-                                            class="btn btn-sm bg-danger mx-2"
-                                            (click)="delete(user)"
-                                    >
-                                        <i class="fas fa-trash"></i>
-                                        {{ "Delete" | localize }}
+
+                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(user)">
+                                    <i class="fas fa-trash"></i>
+                                    {{ "Delete" | localize }}
                                     </button>
-                                    <button
-                                            type="button"
-                                            class="btn btn-sm bg-secondary"
-                                            (click)="resetPassword(user)"
-                                    >
-                                        <i class="fas fa-lock"></i>
-                                        {{ "ResetPassword" | localize }}
-                                    </button>
+
+                                    <button type="button" class="btn btn-sm bg-secondary"(click)="resetPassword(user)">
+                                    <i class="fas fa-lock"></i>
+                                    {{ "ResetPassword" | localize }}
+                                    </button> -->
+
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card-footer table-card-footer bg-light border-top">
+                <!-- <div class="card-footer table-card-footer bg-light border-top">
                     <div class="row">
                         <div class="col-sm-4 col-12 text-sm-left text-center">
                             <button class="btn btn-secondary" (click)="refresh()">
@@ -227,7 +186,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>

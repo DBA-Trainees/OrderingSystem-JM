@@ -12,8 +12,8 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    [Migration("20230704012659_typeMigration")]
-    partial class typeMigration
+    [Migration("20230705060202_foodmigration")]
+    partial class foodmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1697,8 +1697,8 @@ namespace OrderingSystem.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Size")
-                        .HasColumnType("int");
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
@@ -1708,7 +1708,7 @@ namespace OrderingSystem.Migrations
                     b.ToTable("Foods");
                 });
 
-            modelBuilder.Entity("OrderingSystem.Entities.Type", b =>
+            modelBuilder.Entity("OrderingSystem.Entities.Types", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

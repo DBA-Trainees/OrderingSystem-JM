@@ -18,7 +18,7 @@ namespace OrderingSystem.Foods.Dto
         public int Qty { get; set; }
         public string Category { get; set; } //FK
         public string Type { get; set; } //FK
-        public int? Size { get; set; }
+        public string? Size { get; set; }
         public int Price { get; set; }
 
     }

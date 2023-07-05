@@ -15,7 +15,7 @@ namespace OrderingSystem.Entities
         public int Quantity { get; set; }
         public string Category { get; set; }
         public string Type { get; set; }
-        public int? Size { get; set; }
+        public string? Size { get; set; }
         public int Price { get; set; }
 
     }

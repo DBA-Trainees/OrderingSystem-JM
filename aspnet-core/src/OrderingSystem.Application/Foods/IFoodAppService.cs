@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Foods
 {
-    public interface IFoodAppService : IAsyncCrudAppService <FoodDto,int,PagedFoodResultRequest,CreateFoodDto,FoodDto>
+    public interface IFoodAppService : IAsyncCrudAppService <FoodDto,int,PagedFoodResultRequestDto,CreateFoodDto,FoodDto>
     {
     }
 }

@@ -37,25 +37,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
   ) {
     super(injector);
   }
-
-  createUser(): void {
-    this.showCreateOrEditUserDialog();
-  }
-
-  editUser(user: UserDto): void {
-    this.showCreateOrEditUserDialog(user.id);
-  }
-
-  public resetPassword(user: UserDto): void {
-    this.showResetPasswordUserDialog(user.id);
-  }
-
-  clearFilters(): void {
-    this.keyword = '';
-    this.isActive = undefined;
-    this.getDataPage(1);
-  }
-
+  
   protected list(
     request: PagedUsersRequestDto,
     pageNumber: number,
@@ -82,6 +64,25 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       });
   }
 
+  // createUser(): void {
+  //   this.showCreateOrEditUserDialog();
+  // }
+
+  // editUser(user: UserDto): void {
+  //   this.showCreateOrEditUserDialog(user.id);
+  // }
+
+  // public resetPassword(user: UserDto): void {
+  //   this.showResetPasswordUserDialog(user.id);
+  // }
+
+  // clearFilters(): void {
+  //   this.keyword = '';
+  //   this.isActive = undefined;
+  //   this.getDataPage(1);
+  // }
+
+
   protected delete(user: UserDto): void {
     abp.message.confirm(
       this.l('UserDeleteWarningMessage', user.fullName),
@@ -97,38 +98,38 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     );
   }
 
-  private showResetPasswordUserDialog(id?: number): void {
-    this._modalService.show(ResetPasswordDialogComponent, {
-      class: 'modal-lg',
-      initialState: {
-        id: id,
-      },
-    });
-  }
+  // private showResetPasswordUserDialog(id?: number): void {
+  //   this._modalService.show(ResetPasswordDialogComponent, {
+  //     class: 'modal-lg',
+  //     initialState: {
+  //       id: id,
+  //     },
+  //   });
+  // }
 
-  private showCreateOrEditUserDialog(id?: number): void {
-    let createOrEditUserDialog: BsModalRef;
-    if (!id) {
-      createOrEditUserDialog = this._modalService.show(
-        CreateUserDialogComponent,
-        {
-          class: 'modal-lg',
-        }
-      );
-    } else {
-      createOrEditUserDialog = this._modalService.show(
-        EditUserDialogComponent,
-        {
-          class: 'modal-lg',
-          initialState: {
-            id: id,
-          },
-        }
-      );
-    }
+  // private showCreateOrEditUserDialog(id?: number): void {
+  //   let createOrEditUserDialog: BsModalRef;
+  //   if (!id) {
+  //     createOrEditUserDialog = this._modalService.show(
+  //       CreateUserDialogComponent,
+  //       {
+  //         class: 'modal-lg',
+  //       }
+  //     );
+  //   } else {
+  //     createOrEditUserDialog = this._modalService.show(
+  //       EditUserDialogComponent,
+  //       {
+  //         class: 'modal-lg',
+  //         initialState: {
+  //           id: id,
+  //         },
+  //       }
+  //     );
+  //   }
 
-    createOrEditUserDialog.content.onSave.subscribe(() => {
-      this.refresh();
-    });
-  }
+  //   createOrEditUserDialog.content.onSave.subscribe(() => {
+  //     this.refresh();
+  //   });
+  // }
 }
