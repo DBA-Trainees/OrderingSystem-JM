@@ -3,18 +3,16 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using OrderingSystem.Entities;
 using OrderingSystem.Typess.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OrderingSystem.Typess
 {
     public class TypeAppService : AsyncCrudAppService<Types, TypeDto, int, PagedTypeResultRequest, CreateTypeDto, TypeDto>, ITypeAppService
     {
+        private readonly IRepository<Types, int> _repository;
         public TypeAppService(IRepository<Types, int> repository) : base(repository)
         {
+            _repository = repository;
         }
 
         public override Task<TypeDto> CreateAsync(CreateTypeDto input)

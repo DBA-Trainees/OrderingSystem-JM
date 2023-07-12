@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { FoodDto, FoodServiceProxy } from '@shared/service-proxies/service-proxies';
+import { FoodDto, FoodDtoPagedResultDto, FoodServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 
@@ -11,10 +11,12 @@ class PagedFoodResultRequestDto extends PagedRequestDto {
 
 @Component({
   selector: 'app-food',
-  templateUrl: './food.component.html',
+  templateUrl: './food.component.html'  ,
   // styleUrls: ['./food.component.css']
 })
-export class FoodComponent extends PagedListingComponentBase <FoodDto> {
+
+
+export class foodComponent extends PagedListingComponentBase <FoodDto> {
   protected delete(entity: FoodDto): void {
     throw new Error('Method not implemented.');
   }
@@ -51,9 +53,12 @@ export class FoodComponent extends PagedListingComponentBase <FoodDto> {
         finishedCallback();
       })
     )
-    .subscribe((result: FoodDto) => {
+    .subscribe((result: FoodDtoPagedResultDto) => {
       this.foods = result.items;
       this.showPaging(result, pageNumber);
     });
   }
 }
+// CreateFoodView(): void {
+  
+// }

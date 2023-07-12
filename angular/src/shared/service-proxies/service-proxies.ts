@@ -823,31 +823,31 @@ export class FoodServiceProxy {
     }
 
     /**
-     * @param id (optional) 
+     * @param body (optional) 
      * @return Success
      */
-    get(id: number | undefined): Observable<FoodDto> {
-        let url_ = this.baseUrl + "/api/services/app/Food/Get?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+    create(body: CreateFoodDto | undefined): Observable<FoodDto> {
+        let url_ = this.baseUrl + "/api/services/app/Food/Create";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(body);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
                 "Accept": "text/plain"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(response_ as any);
+                    return this.processCreate(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<FoodDto>;
                 }
@@ -856,7 +856,7 @@ export class FoodServiceProxy {
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<FoodDto> {
+    protected processCreate(response: HttpResponseBase): Observable<FoodDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -869,6 +869,58 @@ export class FoodServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FoodDto.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Food/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -950,31 +1002,31 @@ export class FoodServiceProxy {
     }
 
     /**
-     * @param body (optional) 
+     * @param id (optional) 
      * @return Success
      */
-    create(body: CreateFoodDto | undefined): Observable<FoodDto> {
-        let url_ = this.baseUrl + "/api/services/app/Food/Create";
+    get(id: number | undefined): Observable<FoodDto> {
+        let url_ = this.baseUrl + "/api/services/app/Food/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
                 "Accept": "text/plain"
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreate(response_ as any);
+                    return this.processGet(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<FoodDto>;
                 }
@@ -983,7 +1035,7 @@ export class FoodServiceProxy {
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<FoodDto> {
+    protected processGet(response: HttpResponseBase): Observable<FoodDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1052,58 +1104,6 @@ export class FoodServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FoodDto.fromJS(resultData200);
             return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Food/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -3547,7 +3547,7 @@ export class CreateFoodDto implements ICreateFoodDto {
     qty: number;
     category: string | undefined;
     type: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     price: number;
 
     constructor(data?: ICreateFoodDto) {
@@ -3607,7 +3607,7 @@ export interface ICreateFoodDto {
     qty: number;
     category: string | undefined;
     type: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     price: number;
 }
 
@@ -4162,8 +4162,6 @@ export interface IFlatPermissionDto {
 }
 
 export class FoodDto implements IFoodDto {
-    items: FoodDto[] | undefined;
-    totalCount: number;
     id: number;
     image: number;
     imageName: string | undefined;
@@ -4173,7 +4171,7 @@ export class FoodDto implements IFoodDto {
     qty: number;
     category: string | undefined;
     type: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     price: number;
 
     constructor(data?: IFoodDto) {
@@ -4184,15 +4182,9 @@ export class FoodDto implements IFoodDto {
             }
         }
     }
-    
 
     init(_data?: any) {
         if (_data) {
-            if (Array.isArray(_data["items"])){
-                    this.items = [] as any;
-                    for (let item of _data["items"])
-                    this.items.push(FoodDto.fromJS(item));
-            }
             this.id = _data["id"];
             this.image = _data["image"];
             this.imageName = _data["imageName"];
@@ -4248,7 +4240,7 @@ export interface IFoodDto {
     qty: number;
     category: string | undefined;
     type: string | undefined;
-    size: number | undefined;
+    size: string | undefined;
     price: number;
 }
 

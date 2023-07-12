@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-    <!-- <section class="content-header">
+    <section class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
     <section class="content px-2">
         <div class="container-fluid">
             <div class="card">
@@ -132,7 +132,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let user of users| paginate: {id: 'server',itemsPerPage: pageSize,currentPage: pageNumber,totalItems: totalItems}">
+                            <tr *ngFor="let user of users">
                             <td>{{ user.userName }}</td>
                             <td>{{ user.fullName }}</td>
                             <td>{{ user.emailAddress }}</td>
@@ -143,16 +143,15 @@
                             </div>
                             </td>
                                 <td>
-                                    <!-- <button type="button" class="btn btn-sm bg-secondary" (click)="editUser(user)">
+                                    <button type="button" class="btn btn-sm bg-secondary" (click)="editUser(user)">
                                     <i class="fas fa-pencil-alt"></i>
-                                    {{ "Edit" | localize }}
-                                    </button>
+                                    {{ "Edit" | localize }}</button>
 
                                     <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(user)">
                                     <i class="fas fa-trash"></i>
                                     {{ "Delete" | localize }}
                                     </button>
-
+<!-- 
                                     <button type="button" class="btn btn-sm bg-secondary"(click)="resetPassword(user)">
                                     <i class="fas fa-lock"></i>
                                     {{ "ResetPassword" | localize }}

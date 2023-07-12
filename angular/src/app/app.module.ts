@@ -39,11 +39,22 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 
-import { CategoryComponent } from './_Category/Category.component';
-import { FoodComponent } from './_Food/Food.component';
-import { DivisionComponent } from './_Division/Division.component';
-import { TypeComponent } from './_Type/Type.component';
-import { CreateFoodComponent } from './_Food/Create-Food/CreateFood.component';
+import { categoryComponent } from './category/category.component';
+import { foodComponent } from './food/food.component';
+import { divisionComponent } from './division/division.component';
+import { typeComponent } from './type/type.component';
+
+// create function
+import { createfoodComponent } from './food/create-food/createfood.component';
+import { createcategoryComponent } from './category/create-category/createcategory.component';
+import { createdivisionComponent } from './division/create-division/createdivision.component';
+import { createtypeComponent } from './type/create-type/createtype.component';
+
+//edit function
+import { editcategoryComponent } from './category/edit-category/editcategory.component';
+import { editdivisionComponent } from './division/edit-division/editdivision.component';
+import { edittypeComponent } from './type/edit-type/edittype.component';
+
 import { CategoriesServiceProxy, DivisionServiceProxy, FoodServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
@@ -78,11 +89,17 @@ import { CategoriesServiceProxy, DivisionServiceProxy, FoodServiceProxy, TypeSer
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
-        CategoryComponent,
-        DivisionComponent,
-        FoodComponent,
-        TypeComponent,
-        CreateFoodComponent
+        divisionComponent,
+        editdivisionComponent,
+        createdivisionComponent,
+        categoryComponent,
+        foodComponent,
+        edittypeComponent,
+        createtypeComponent,
+        typeComponent,
+        createfoodComponent,
+        createcategoryComponent,
+        editcategoryComponent,
 
     ],
     imports: [
