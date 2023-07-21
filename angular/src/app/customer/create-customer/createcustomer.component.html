@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-6">
-          <h1>{{ "Type" | localize }}</h1>
+          <h1>{{ "Division" | localize }}</h1>
         </div>
       </div>
     </div>
@@ -17,14 +17,23 @@
            
               <div class="mb-3">
                 <label for="Name" class="form-label">Name</label>
-                <input type="text" 
-                class="form-control" 
-                id="Name" name="Name" [(ngModel)]="types.name" #nameModel="ngModel" >
+                <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="customer.name" #nameModel="ngModel" >
               </div>
+
+                <label for="Name" class="form-label">Division</label>
+              <div class="mb-3">
+                
+                <select style="width: 150px; height: auto;"  
+                [ngModel]="selectedDivision"
+                (ngModelChange)="selectedDivision=$event"
+                   name="name" id="name">
+                  <option *ngFor="let d of divisions" [ngValue]="d.id">{{d.name}}</option>
+                </select>
+              </div>
+            
               <abp-modal-footer
               [cancelDisabled]="saving"
             ></abp-modal-footer>
-            
             </form>
        </div>
   </div>

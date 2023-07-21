@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { foodComponent } from './food/food.component';
 import { edittypeComponent } from './type/edit-type/edittype.component';
 import { typeComponent } from './type/type.component';
+import { customerComponent } from './customer/customer.component';
 import { createtypeComponent } from './type/create-type/createtype.component';
 import { divisionComponent } from './division/division.component';
 import { createdivisionComponent } from './division/create-division/createdivision.component';
@@ -19,6 +20,8 @@ import { categoryComponent } from './category/category.component';
 import { createfoodComponent } from './food/create-food/createfood.component';
 import { createcategoryComponent } from './category/create-category/createcategory.component';
 import { editcategoryComponent } from './category/edit-category/editcategory.component';
+import { editcustomerComponent } from './customer/edit-customer/editcustomer.component';
+import { createcustomerComponent } from './customer/create-customer/createcustomer.component';
 
 
 @NgModule({
@@ -33,7 +36,10 @@ import { editcategoryComponent } from './category/edit-category/editcategory.com
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
-                    { path: 'category', component: categoryComponent, canActivate: [AppRouteGuard] },
+                    { path: 'customer', component: customerComponent, canActivate: [AppRouteGuard] },
+                    { path: 'customer/createcustomer', component: createcustomerComponent, canActivate: [AppRouteGuard] },
+                    { path: 'customer/editcustomer', component: editcustomerComponent, canActivate: [AppRouteGuard] },
+                    { path: 'category', component: categoryComponent, data: { permission: 'Pages.Customer' }, canActivate: [AppRouteGuard] },
                     { path: 'category/createcategory', component: createcategoryComponent, canActivate: [AppRouteGuard] },
                     { path: 'category/editcategory', component: editcategoryComponent, canActivate: [AppRouteGuard] },
                     { path: 'division', component: divisionComponent, canActivate: [AppRouteGuard] },
@@ -45,7 +51,6 @@ import { editcategoryComponent } from './category/edit-category/editcategory.com
                     { path: 'type/createtype', component: createtypeComponent, canActivate: [AppRouteGuard] },
                     { path: 'type', component: typeComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
-               
                 ]
             }
         ])

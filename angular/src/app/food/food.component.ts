@@ -59,6 +59,3 @@ export class foodComponent extends PagedListingComponentBase <FoodDto> {
     });
   }
 }
-// CreateFoodView(): void {
-  
-// }

@@ -1,0 +1,55 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #editCustomerModal="ngForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'EditCustomer' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <tabset>
+      <tab [heading]="'Customer Detail' | localize" class="pt-3 px-2">
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="name">
+            {{ "Name" | localize }}
+          </label>
+
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              required
+              maxlength="32"
+              [(ngModel)]="customer.name"
+              #nameModel="ngModel"
+              #nameEl
+            />
+            <abp-validation-summary
+              [control]="nameModel"
+              [controlEl]="nameEl"
+            ></abp-validation-summary>
+          </div>
+          <label style="margin-top: 10px;" for="Name" class="form-label">Division</label>
+          <div class="col-md-9">
+            <select style="width: 334px; height: auto;margin-left: 60px;margin-top: 10px;"  
+            [ngModel]="selectedDivision"
+            (ngModelChange)="selectedDivision=$event"
+               name="name" id="name">
+              <option *ngFor="let d of divisions" [ngValue]="d.id">{{d.name}}</option>
+            </select>
+          </div>
+        
+        </div>
+      </tab>
+    </tabset>
+  </div>
+  <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!editCustomerModal.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>

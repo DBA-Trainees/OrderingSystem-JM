@@ -4,6 +4,7 @@ import { CategoriesDto, CategoriesDtoPagedResultDto, CategoriesServiceProxy } fr
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { editcategoryComponent } from './edit-category/editcategory.component';
+import { createcategoryComponent } from './create-category/createcategory.component';
 
 
 class PagedCategoriesResultRequestDto extends PagedRequestDto {
@@ -32,23 +33,37 @@ export class categoryComponent extends PagedListingComponentBase <CategoriesDto>
   super(injector);
 }
 
-getCategoryId(category: CategoriesDto): void {
-this.showEditCategory(category.id)
+createCategory(): void{
+  this.showCreateorEditCategory();
 }
 
-private showEditCategory(id?: number): void {
-  let EditCategory: BsModalRef;
-  EditCategory = this._modalService.show(
-    editcategoryComponent,
-    {
-      class: 'modal-lg',
-      initialState:{
-        id: id,
-      },
+editCategory(category: CategoriesDto): void {
+this.showCreateorEditCategory(category.id)
+}
+
+private showCreateorEditCategory(id?: number): void {
+  let CreateorEditCategory: BsModalRef;
+  if(!id){
+    CreateorEditCategory = this._modalService.show(
+      createcategoryComponent,
+      {
+        class: 'modal-lg',
+        },
+    );
+  }else{
+    CreateorEditCategory = this._modalService.show(
+      editcategoryComponent,
+      {
+        class: 'modal-lg',
+        initialState:{
+          id:id,
+        },  
+      }
+    );
     }
-  )
+ 
   
-  EditCategory.content.onSave.subscribe(() => {
+  CreateorEditCategory.content.onSave.subscribe(() => {
     this.refresh();
   });
 }

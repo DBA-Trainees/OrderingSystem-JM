@@ -88,7 +88,6 @@ export class CreateUserDialogComponent extends AppComponentBase
 
   save(): void {
     this.saving = true;
-
     this.user.roleNames = this.getCheckedRoles();
 
     this._userService.create(this.user).subscribe(

@@ -4,6 +4,7 @@ import { DivisionDto, DivisionDtoPagedResultDto, DivisionServiceProxy } from '@s
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { editdivisionComponent } from './edit-division/editdivision.component';
+import { createdivisionComponent } from './create-division/createdivision.component';
 
 class PagedDivisionResultRequestDto extends PagedRequestDto{
   keyword: string;
@@ -31,22 +32,34 @@ export class divisionComponent extends PagedListingComponentBase <DivisionDto>{
   ){
     super(injector);
   }
+  createDivision(): void{
+    this.showCreateEditDivision();
+  }
 
   editdivision(division: DivisionDto): void{
-    this.showEditDivision(division.id)
+    this.showCreateEditDivision(division.id)
   }
-  private showEditDivision(id?: number): void {
-    let EditDivision: BsModalRef;
-    EditDivision = this._modalService.show(
-      editdivisionComponent,
-      {
-        class: 'model-lg',
-        initialState:{
-          id:id,
+  private showCreateEditDivision(id?: number): void {
+    let CreateorEditDivision: BsModalRef;
+    if(!id){
+      CreateorEditDivision=this._modalService.show(
+        createdivisionComponent,
+        {
+          class:'modal-lg',
         }
-      }
-    )
-    EditDivision.content.onSave.subscribe(()=>
+      );
+    }else{
+      CreateorEditDivision=this._modalService.show(
+        editdivisionComponent,
+        {
+          class:'modal-lg',
+          initialState:{
+            id:id,
+          },
+        }
+      );
+    }
+    CreateorEditDivision.content.onSave.subscribe(()=>
     {
       this.refresh();
     });

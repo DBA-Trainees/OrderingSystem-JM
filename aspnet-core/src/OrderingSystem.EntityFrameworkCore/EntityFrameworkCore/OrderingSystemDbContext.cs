@@ -11,9 +11,11 @@ namespace OrderingSystem.EntityFrameworkCore
     {
         /* Define a DbSet for each entity of the application */
         public DbSet<Food> Foods { get; set; }
-          public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Division> Division { get; set; }
         public DbSet<Types> Types { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
 
         public OrderingSystemDbContext(DbContextOptions<OrderingSystemDbContext> options)
             : base(options)

@@ -7,11 +7,11 @@
       </div>
     </div>
   </section>
+
   <section class="content px-2">
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          
           <div class="card-body">
             <form  class="form-horizontal" autocomplete="off" (ngSubmit)="save()" >
            
@@ -19,14 +19,11 @@
                 <label for="Name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="category.name" #nameModel="ngModel" >
               </div>
-              
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <abp-modal-footer [cancelDisabled]="saving"></abp-modal-footer>
             </form>
        </div>
   </div>
   </div>
   </div>
   </section>
-  <abp-modal-footer
-  [cancelDisabled]="saving"
-></abp-modal-footer>
+  

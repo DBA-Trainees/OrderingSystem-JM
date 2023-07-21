@@ -4,6 +4,7 @@ import { TypeDto, TypeDtoPagedResultDto, TypeServiceProxy } from '@shared/servic
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { edittypeComponent } from './edit-type/edittype.component';
+import { createtypeComponent } from './create-type/createtype.component';
 
 class PagedTypeResultRequestDto extends PagedRequestDto{
   keyword: string;
@@ -30,21 +31,33 @@ export class typeComponent extends PagedListingComponentBase <TypeDto> {
   super(injector);
 }
 
+createType(): void {
+  this.ShowCreateorEditType();
+}
 edittype(types: TypeDto): void {
-  this.ShowEditType(types.id)
+  this.ShowCreateorEditType(types.id)
   }
-  private ShowEditType(id?: number): void {
-    let EditType: BsModalRef;
-    EditType = this._modalService.show(
-      edittypeComponent,
-      {
-        class: 'modal-lg',
-        initialState:{
-          id: id,
-        },
-      }
-    )
-    EditType.content.onSave.subscribe(() => {
+  private ShowCreateorEditType(id?: number): void {
+    let CreateOrEditType: BsModalRef;
+    if(!id){
+      CreateOrEditType = this._modalService.show(
+        createtypeComponent,
+        {
+          class: 'modal-lg',
+        }
+      );
+    } else {
+      CreateOrEditType = this._modalService.show(
+        edittypeComponent,
+        {
+          class:'modal-lg',
+          initialState:{
+            id:id,
+          },
+        }
+      )
+    }
+    CreateOrEditType.content.onSave.subscribe(() => {
       this.refresh();
     });
   }

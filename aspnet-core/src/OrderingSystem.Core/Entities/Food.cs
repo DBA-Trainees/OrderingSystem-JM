@@ -1,11 +1,7 @@
 ﻿using Abp.Domain.Entities.Auditing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderingSystem.Entities
-{ 
+{
     public class Food : FullAuditedEntity<int>
     {
         public byte[] Image { get; set; }
@@ -14,8 +10,8 @@ namespace OrderingSystem.Entities
         public string Name { get; set; }
         public bool Availability { get; set; }
         public int Qty { get; set; }
-        public string Category { get; set; } //FK
-        public string Type { get; set; } //FK
+        public Category Category { get; set; } //FK
+        public Types Types { get; set; } //FK
         public string? Size { get; set; }
         public int Price { get; set; }
 

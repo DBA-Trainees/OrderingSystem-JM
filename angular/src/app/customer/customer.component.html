@@ -2,10 +2,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-6">
-          <h1>{{ "Category" | localize }}</h1>
+          <h1>{{ "Customer" | localize }}</h1>
         </div>
         <div class="col-6 text-right">
-          <a href="javascript:;"  (click)="createCategory()" class="btn bg-blue">
+          <a href="javascript:;"  (click)="createCustomer()" class="btn bg-blue">
             <i class="fa fa-plus-square"></i>
             {{ "Create" | localize }}
             
@@ -49,23 +49,25 @@
                   <tr>
                     <th>{{ "Id" | localize }}</th>
                     <th>{{ "Name" | localize }}</th>
+                    <th>{{ "Division" | localize }}</th>
                    
                     <th style="width: 170px">{{ "Actions" | localize }}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <tr *ngFor="let c of category" >
-                    <td> {{ c.id }} </td>
-                    <td> {{ c.name }}</td>
+                    <tr *ngFor="let d of customer" >
+                    <td> {{ d.id }} </td>
+                    <td> {{ d.name }}</td>
+                    <td> {{ d.division?.name }}</td>
                 
                     <td>
-                      <button type="button" class="btn btn-sm bg-secondary" (click)="editCategory(c)">
+                      <button type="button" class="btn btn-sm bg-secondary" (click)="editcustomer(d)">
                         <i class="fas fa-pencil-alt"></i>
                         {{ "Edit" | localize }}
                       </button>
   
-                      <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(c)">
+                      <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(d)">
                         <i class="fas fa-trash"></i>
                         {{ "Delete" | localize }}
                       </button>

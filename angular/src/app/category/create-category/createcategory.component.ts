@@ -13,7 +13,6 @@ import {
   CategoriesServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { Router } from "@angular/router";
-
 @Component({
   selector: "app-category",
   templateUrl: "./createcategory.component.html",
@@ -26,17 +25,17 @@ export class createcategoryComponent
   category = new CreateCategoriesDto();
 
   @Output() onSave = new EventEmitter<any>();
+
   constructor(
     injector: Injector,
     public _categoriesService: CategoriesServiceProxy,
+    public router: Router,
     public bsModalRef: BsModalRef,
-    private router: Router
   ) {
     super(injector);
   }
 
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
   }
   save(): void {
     this.saving = true;
@@ -46,13 +45,11 @@ export class createcategoryComponent
         this.notify.info(this.l("SavedSuccessfully"));
         this.bsModalRef.hide();
         this.onSave.emit();
-        this.router.navigate(["/app/category"]);
+        this.router.navigateByUrl('app/category')
       },
       () => {
         this.saving = false;
       }
     );
-
-    
-    }
+  }
 }
