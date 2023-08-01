@@ -13,13 +13,15 @@
         <div class="card-header">
           
           <div class="card-body">
-            <form  class="form-horizontal" autocomplete="off" (ngSubmit)="save()" >
+            <form  class="form-horizontal" #createDivisionForm="ngForm" autocomplete="off" (ngSubmit)="save()" >
            
               <div class="mb-3">
                 <label for="Name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="division.name" #nameModel="ngModel" >
+                <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="division.name" required #nameModel="ngModel" >
               </div>
               <abp-modal-footer
+              [saveDisabled]="!createDivisionForm.form.valid || saving"
+              (onCancelClick)="bsModalRef.hide()"
               [cancelDisabled]="saving"
             ></abp-modal-footer>
             </form>

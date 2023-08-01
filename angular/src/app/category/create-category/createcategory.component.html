@@ -13,13 +13,17 @@
       <div class="card">
         <div class="card-header">
           <div class="card-body">
-            <form  class="form-horizontal" autocomplete="off" (ngSubmit)="save()" >
+            <form  class="form-horizontal" #createCategoryModal="ngForm" autocomplete="off" (ngSubmit)="save()" >
            
               <div class="mb-3">
                 <label for="Name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="category.name" #nameModel="ngModel" >
+                <input type="text" class="form-control" id="Name" name="Name" required [(ngModel)]="category.name" #nameModel="ngModel" >
               </div>
-              <abp-modal-footer [cancelDisabled]="saving"></abp-modal-footer>
+              <abp-modal-footer
+              [saveDisabled]="!createCategoryModal.form.valid || saving"
+              [cancelDisabled]="saving"
+              (onCancelClick)="bsModalRef.hide()"
+            ></abp-modal-footer>
             </form>
        </div>
   </div>

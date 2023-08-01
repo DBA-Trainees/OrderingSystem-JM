@@ -1,0 +1,6 @@
+.backgroundimg{
+    background-image: url(assets/img/pxfuel.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}

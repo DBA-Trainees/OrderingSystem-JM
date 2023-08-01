@@ -49,20 +49,20 @@ namespace OrderingSystem.Customers
 
         public async Task<PagedResultDto<DivisionDto>> GetDivision()
         {
-            var customer = await _divisionRepository.GetAll()
+            var query = await _divisionRepository.GetAll()
                 .Select(x => ObjectMapper.Map<DivisionDto>(x))
                 .ToListAsync();
 
-            return new PagedResultDto<DivisionDto>(customer.Count(), customer);
+            return new PagedResultDto<DivisionDto>(query.Count(), query);
         }
         public async Task<PagedResultDto<CustomerDto>> GetAllCustomerWithDivision(PagedCustomerResultRequestDto input)
         {
-            var division = await _repository.GetAll()
+            var customer = await _repository.GetAll()
                 .Include(x => x.Division)
                 .Select(x => ObjectMapper.Map<CustomerDto>(x))
                 .ToListAsync();
 
-            return new PagedResultDto<CustomerDto>(division.Count(), division);
+            return new PagedResultDto<CustomerDto>(customer.Count(), customer);
         }
     }
 

@@ -5,18 +5,18 @@
   (ngSubmit)="save()"
 >
   <abp-modal-header
-    [title]="'EditCustomer' | localize"
+    [title]="'Edit Customer' | localize"
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
     <tabset>
       <tab [heading]="'Customer Detail' | localize" class="pt-3 px-2">
         <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="name">
+          <label class="col-md-12 col-form-label" for="name">
             {{ "Name" | localize }}
           </label>
 
-          <div class="col-md-9">
+          <div class="col-md-12">
             <input
               type="text"
               class="form-control"
@@ -33,9 +33,10 @@
               [controlEl]="nameEl"
             ></abp-validation-summary>
           </div>
-          <label style="margin-top: 10px;" for="Name" class="form-label">Division</label>
-          <div class="col-md-9">
-            <select style="width: 334px; height: auto;margin-left: 60px;margin-top: 10px;"  
+          <div class="col-md-12">
+          <label for="Name" class="form-label">Division</label>
+
+            <select class="form-control" 
             [ngModel]="selectedDivision"
             (ngModelChange)="selectedDivision=$event"
                name="name" id="name">

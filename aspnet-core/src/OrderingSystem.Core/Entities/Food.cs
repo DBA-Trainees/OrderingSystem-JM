@@ -11,9 +11,12 @@ namespace OrderingSystem.Entities
         public bool Availability { get; set; }
         public int Qty { get; set; }
         public Category Category { get; set; } //FK
+        public int? CategoryId { get; set; }
+        public int? TypesId { get; set; } 
+
         public Types Types { get; set; } //FK
         public string? Size { get; set; }
-        public int Price { get; set; }
+        public double Price { get; set; }
 
     }
 }

@@ -44,19 +44,21 @@ import { foodComponent } from './food/food.component';
 import { divisionComponent } from './division/division.component';
 import { typeComponent } from './type/type.component';
 import { customerComponent } from './customer/customer.component';
+import { dashboardComponent } from './dashboard/dashboard.component';
 
 // create function
-import { createfoodComponent } from './food/create-food/createfood.component';
 import { createcategoryComponent } from './category/create-category/createcategory.component';
 import { createdivisionComponent } from './division/create-division/createdivision.component';
 import { createtypeComponent } from './type/create-type/createtype.component';
 import { createcustomerComponent } from './customer/create-customer/createcustomer.component';
+import { createfoodComponent } from './food/create-food/createfood.component';
 
 //edit function
 import { editcategoryComponent } from './category/edit-category/editcategory.component';
 import { editdivisionComponent } from './division/edit-division/editdivision.component';
 import { edittypeComponent } from './type/edit-type/edittype.component';
 import { editcustomerComponent } from './customer/edit-customer/editcustomer.component';
+import { editfoodComponent } from './food/edit-food/editfood.component';
 
 import { CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 
@@ -68,6 +70,7 @@ import { CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, Foo
         AppComponent,
         HomeComponent,
         AboutComponent,
+        
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,
@@ -100,16 +103,18 @@ import { CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, Foo
         edittypeComponent,
         createtypeComponent,
         typeComponent,
-        createfoodComponent,
         createcategoryComponent,
         editcategoryComponent,
         customerComponent,
         editcustomerComponent,
         createcustomerComponent,
-
+        dashboardComponent,
+        createfoodComponent,
+        editfoodComponent,
 
     ],
     imports: [
+        // BrowserModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

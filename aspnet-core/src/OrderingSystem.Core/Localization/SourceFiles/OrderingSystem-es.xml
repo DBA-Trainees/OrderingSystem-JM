@@ -116,5 +116,21 @@
     <text name="Clear">Borrar</text>
     <text name="ResetPasswordStepOneInfo">1. Ingrese su contraseña de administrador</text>
     <text name="ResetPasswordStepTwoInfo">2. Copie esta contraseña aleatoria para poder enviársela al usuario</text>
+
+	  <text name="customer">customer</text>
+	  <text name="createcustomer">create customer</text>
+	  <text name="editcustomer">edit customer</text>
+	  <text name="category">category</text>
+	  <text name="createcategory">create category</text>
+	  <text name="editcategory">edit category</text>
+	  <text name="dashboard">dashboard</text>
+	  <text name="division">division</text>
+	  <text name="create division">create division</text>
+	  <text name="edit division">edit division</text>
+	  <text name="food">food</text>
+	  <text name="create food">create food</text>
+	  <text name="type">type</text>
+	  <text name="createtype">create type</text>
+	  <text name="edittype">edit type</text>
   </texts>
 </localizationDictionary>

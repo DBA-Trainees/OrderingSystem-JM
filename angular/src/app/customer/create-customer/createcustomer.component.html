@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-6">
-          <h1>{{ "Division" | localize }}</h1>
+          <h1>{{ "Customer" | localize }}</h1>
         </div>
       </div>
     </div>
@@ -13,17 +13,17 @@
         <div class="card-header">
           
           <div class="card-body">
-            <form  class="form-horizontal" autocomplete="off" (ngSubmit)="save()" >
+            <form  class="form-horizontal" #createCustomerModal="ngForm" autocomplete="off" (ngSubmit)="save()" >
            
               <div class="mb-3">
                 <label for="Name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="customer.name" #nameModel="ngModel" >
+                <input type="text" class="form-control" id="Name" name="Name" required [(ngModel)]="customer.name" #nameModel="ngModel" >
               </div>
 
-                <label for="Name" class="form-label">Division</label>
+              <label for="Name" class="form-label">Division</label>
               <div class="mb-3">
                 
-                <select style="width: 150px; height: auto;"  
+                <select required class="form-control"
                 [ngModel]="selectedDivision"
                 (ngModelChange)="selectedDivision=$event"
                    name="name" id="name">
@@ -32,7 +32,9 @@
               </div>
             
               <abp-modal-footer
+              [saveDisabled]="!createCustomerModal.form.valid || saving"
               [cancelDisabled]="saving"
+              (onCancelClick)="bsModalRef.hide()"  
             ></abp-modal-footer>
             </form>
        </div>

@@ -8,14 +8,14 @@ namespace OrderingSystem.Foods.Dto
     [AutoMapTo(typeof(Food))]
     public class CreateFoodDto
     {
-        public byte Image { get; set; }
+        public byte[] Image { get; set; }
         public string ImageName { get; set; }
         public string ImageFileType { get; set; }
         public string Name { get; set; }
         public bool Availability { get; set; }
         public int Qty { get; set; }
-        public Category Category { get; set; } //FK
-        public Types Types { get; set; } //FK
+        public int CategoryId { get; set; } //FK
+        public int TypesId { get; set; } //FK
         public string? Size { get; set; }
         public int Price { get; set; }
 

@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-6">
-        <h1>{{ "Food" | localize }}</h1>
+        <h1>{{ "Edit Food" | localize }}</h1>
       </div>
     </div>
   </div>
@@ -24,33 +24,7 @@
               <input type="file" class="form-control" accept="image/*" id="image" name="image" #imageName #file (change)="imageSelected($event)"/>
             </div>
 
-            <div hidden class="mb-3">
-              <label for="ImageName" class="form-label">Image Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="imageName"
-                name="imageName"
-                [(ngModel)]="food.imageName"
-                #nameModel="ngModel"
-                [(ngModel)]="imgFileName"
-              />
-            </div>
-
-            <div hidden class="mb-3">
-              <label for="ImageFileType" class="form-label">Image File Type</label>
-              <input
-                type="text"
-                class="form-control"
-                id="ImageFileType"
-                name="ImageFileType"
-                [(ngModel)]="food.imageFileType"
-                #nameModel="ngModel"
-                [(ngModel)]="imgFileType"
-              />
-            </div>
-
-            <div class="mb-3">
+              <div class="mb-3">
               <label for="Name" class="form-label">Name</label>
               <input
                 type="text"
@@ -113,7 +87,13 @@
             <label for="Type" class="form-label">Type</label>
 
             <div class="mb-3">
-              <select class="form-control" [ngModel]="selectedType"(ngModelChange)="selectedType = $event" name="type"id="type">
+              <select
+                [ngModel]="selectedType"
+                (ngModelChange)="selectedType = $event"
+                name="type"
+                id="type"
+                class="form-control"
+              >
                 <option *ngFor="let t of types" [ngValue]="t.id">
                   {{ t.name }}
                 </option>
@@ -127,8 +107,7 @@
                 #nameModel="ngModel"
                 name="name"
                 id="name"
-                class="form-control"  
-              >
+                class="form-control"  >
                 <option>Small</option>
                 <option>Medium</option>
                 <option>Large</option>
