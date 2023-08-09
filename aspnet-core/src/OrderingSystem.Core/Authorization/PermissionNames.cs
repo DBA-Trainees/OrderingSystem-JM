@@ -16,6 +16,7 @@
         public const string Pages_Type = "Pages.Type";
         public const string Pages_Division = "Pages.Division";
         public const string Pages_Dashboard = "Pages.Dashboard";
+        public const string Pages_Order = "Pages.Order";
 
     }
 }

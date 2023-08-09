@@ -24,6 +24,6 @@ namespace OrderingSystem.Foods.Dto
         public Types Types { get; set; } //FK
         public int TypesId { get; set; } //FK
         public string? Size { get; set; }
-        public int Price { get; set; }
+        public Double Price { get; set; }
     }
 }

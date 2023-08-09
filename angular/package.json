@@ -11,10 +11,10 @@
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 4200",
     "test": "ng test",
-    "nswag":"cd nswag/&& refresh.bat"
-
+    "nswag": "cd nswag/&& refresh.bat"
   },
   "dependencies": {
+    "@abp/ng.core": "^7.3.2",
     "@angular/animations": "^15.0.3",
     "@angular/common": "^15.0.3",
     "@angular/compiler": "^15.0.3",

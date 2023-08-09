@@ -23,7 +23,7 @@ import { Router } from "@angular/router";
 })
 export class createcustomerComponent extends AppComponentBase implements OnInit {
   saving = false;
-  customer=  new CreateCustomerDto();
+    customer=  new CreateCustomerDto();
   divisions: DivisionDto[];
   selectedDivision: number = null;
 

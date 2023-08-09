@@ -10,6 +10,6 @@ namespace OrderingSystem.Customers
     public interface ICustomerAppService : IAsyncCrudAppService<CustomerDto, int, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>
     {
         Task<PagedResultDto<DivisionDto>> GetDivision();
-        Task<PagedResultDto<CustomerDto>> GetAllCustomerWithDivision(PagedCustomerResultRequestDto input);
+        Task<PagedResultDto<CustomerDto>> GetAllCustomerWithDivisionAndUser(PagedCustomerResultRequestDto input);
     }
 }

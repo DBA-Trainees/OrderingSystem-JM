@@ -1,19 +1,22 @@
 <section class="content-header">
-  <div class="container-fluid">
+   <div class="container-fluid">
     <div class="row">
       <div class="col-6">
         <h1>{{ "Order" | localize }}</h1>
       </div>
       <div class="col-6 text-right">
-        <a href="javascript:;"class="btn bg-blue">
+        <a href="javascript:;" class="btn bg-blue" (click)="showModal()">
           <i class="fa fa-plus-square"></i>
-          {{ "View Cart" | localize }}
-          <!-- CREATE HERE -->
+          Cart {{ count }}
+         
         </a>
       </div>
     </div>
   </div>
+
+ 
 </section>
+
 <section class="content px-2">
   <div class="container-fluid">
     <div class="card">
@@ -29,12 +32,7 @@
                   <i class="fas fa-search"></i>
                 </button>
               </div>
-              <input
-                type="text"
-                class="form-control"
-                name="keyword"
-                [placeholder]="'SearchWithThreeDot' | localize"
-              />
+              <input type="text" class="form-control" name="keyword" />
               <!-- <input type="text" class="form-control" name="keyword" [placeholder]="'SearchWithThreeDot' | localize"[(ngModel)]="keyword"(keyup.enter)="getDataPage(1)"/> -->
               <div class="input-group-append">
                 <!-- dropdown na icon -->
@@ -49,30 +47,49 @@
           </div>
         </div>
 
-        <div style="align-items: center; display: flex; justify-content: center;" class="card-body">
-
-          <div class="card" style="width: 18rem;">
-            <img src="assets/img/picturesample.png" style="height: 350px;" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Food Name</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <h6>Price Name</h6>
-              <h6>Category Name</h6>
-              <h6>Quantity input bux Name</h6>
-                <input style="margin-bottom: 10px;"  type="text" class="form-control" id="quantity"  name="quantity" />
-                <select style="width: 150px; height: auto;"  
-                
-                
-                   name="name" id="name">
-                  <option ></option>
-                </select>
-              <a style="margin-top: 1vh;" href="#" class="btn btn-primary">Add to cart</a>
+        <div style="display: flex; align-items: center; margin-top: 10px;" class="row">
+          <div *ngFor="let food of foods" class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="img-container">
+                <img
+                 
+                  [src]="'data:' + food.imageFileType + ';base64,' + food.image"
+                  class="card-img-top"
+                />
+              </div>
+                <div class="card-body">
+                  <h5 class="card-title" class="form-label">
+                    <b>{{ food.name }}</b>
+                  </h5>
+                  <p class="card-text"></p>
+                  <br />
+                  <h6><b>Price :</b>{{ food.price }}</h6>
+                  <h6><b>Category:</b> {{ food.category.name }}</h6>  
+                  <h6><b>Quantity</b></h6>
+                  <input
+                    style="margin-bottom: 10px"
+                    type="number"
+                    min="1"
+                    class="form-control"
+                    id="quantity"
+                    name="quantity"
+                  />
+                  <label for="Size" class="form-label">Size</label>
+                  <div class="mb-3">
+                    <select name="name" id="name" class="form-control">
+                      <option>Small</option>
+                      <option>Medium</option>
+                      <option>Large</option>
+                    </select>
+                  </div>
+                  <a style="margin-top: 1vh" (click)="addToCart(food.id)" class="btn btn-primary"
+                    >Add to cart</a
+                  >
+                </div>
+              </div>
             </div>
-
           </div>
-
-
-
         </div>
       </div>
     </div>

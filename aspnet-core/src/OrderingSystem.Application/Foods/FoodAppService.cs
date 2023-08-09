@@ -79,5 +79,6 @@ namespace OrderingSystem.Foods
 
             return new PagedResultDto<FoodDto>(food.Count(), food);
         }
+     
     }
 }

@@ -55,7 +55,7 @@ namespace OrderingSystem.Customers
 
             return new PagedResultDto<DivisionDto>(query.Count(), query);
         }
-        public async Task<PagedResultDto<CustomerDto>> GetAllCustomerWithDivision(PagedCustomerResultRequestDto input)
+        public async Task<PagedResultDto<CustomerDto>> GetAllCustomerWithDivisionAndUser(PagedCustomerResultRequestDto input)
         {
             var customer = await _repository.GetAll()
                 .Include(x => x.Division)

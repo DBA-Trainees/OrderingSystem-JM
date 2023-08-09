@@ -88,7 +88,8 @@
             <div class="mb-3">
               <label for="Quantity" class="form-label">Quantity</label>
               <input
-                type="text"
+                type="number"
+                min="1"
                 class="form-control"
                 id="quantity"
                 name="quantity"
@@ -123,11 +124,11 @@
             <label for="Size" class="form-label">Size</label>
             <div class="mb-3">
               <select
-                [(ngModel)]="food.size"
-                #nameModel="ngModel"
                 name="name"
                 id="name"
-                class="form-control"  
+                class="form-control" 
+                [(ngModel)]="food.size"
+              #nameModel="ngModel" 
               >
                 <option>Small</option>
                 <option>Medium</option>
@@ -138,7 +139,8 @@
             <div class="mb-3">
               <label for="Price" class="form-label">Price</label>
               <input
-                type="text"
+                type="number"
+                min="1"
                 class="form-control"
                 id="food"
                 name="food"

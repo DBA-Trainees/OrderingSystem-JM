@@ -17,7 +17,7 @@ class PagedFoodResultRequestDto extends PagedRequestDto {
   // styleUrls: ['./food.component.css']
 })
 export class foodComponent extends PagedListingComponentBase <FoodDto> {
- 
+  
   foods: FoodDto[] = [];
   keyword = '';
   isActive: boolean | null;
@@ -35,7 +35,7 @@ export class foodComponent extends PagedListingComponentBase <FoodDto> {
   }
   editFood(food:FoodDto):void{
     this.showCreateEditFood(food.id);
-}
+  }
 private showCreateEditFood(id?: number): void {
   let CreateorEditFood: BsModalRef;
   if (!id) {
@@ -92,4 +92,7 @@ protected delete(food: FoodDto): void {
       this.showPaging(result, pageNumber);
     });
   }
+}
+export interface CartProduct extends FoodDto{
+  qty : number;
 }

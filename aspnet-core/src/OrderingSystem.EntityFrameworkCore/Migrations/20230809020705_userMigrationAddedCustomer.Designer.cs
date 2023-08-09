@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    partial class OrderingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230809020705_userMigrationAddedCustomer")]
+    partial class userMigrationAddedCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1645,9 +1648,14 @@ namespace OrderingSystem.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DivisionId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Customers");
                 });
@@ -2129,7 +2137,13 @@ namespace OrderingSystem.Migrations
                         .WithMany()
                         .HasForeignKey("DivisionId");
 
+                    b.HasOne("OrderingSystem.Authorization.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Division");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OrderingSystem.Entities.Food", b =>

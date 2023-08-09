@@ -18,6 +18,7 @@ namespace OrderingSystem.Authorization
             context.CreatePermission(PermissionNames.Pages_Category, L("Category"));
             context.CreatePermission(PermissionNames.Pages_Division, L("Division"));
             context.CreatePermission(PermissionNames.Pages_Type , L("Type"));
+            context.CreatePermission(PermissionNames.Pages_Order , L("Order"));
             context.CreatePermission(PermissionNames.Pages_Dashboard, L("Dashboard"));
 
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
