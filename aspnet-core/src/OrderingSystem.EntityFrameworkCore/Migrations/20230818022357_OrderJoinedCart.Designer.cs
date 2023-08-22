@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    partial class OrderingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230818022357_OrderJoinedCart")]
+    partial class OrderJoinedCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1590,9 +1593,6 @@ namespace OrderingSystem.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateOrdered")
-                        .HasColumnType("datetime2");
-
                     b.Property<long?>("DeleterUserId")
                         .HasColumnType("bigint");
 
@@ -1847,9 +1847,6 @@ namespace OrderingSystem.Migrations
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

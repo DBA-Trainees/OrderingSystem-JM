@@ -93,6 +93,4 @@ protected delete(food: FoodDto): void {
     });
   }
 }
-export interface CartProduct extends FoodDto{
-  qty : number;
-}
+

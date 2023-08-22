@@ -87,7 +87,6 @@ save(): void {
 
   this.food.imageName = this.imgFileName;
   this.food.imageFileType = this.imgFileType;
-
   this._foodService.create(this.food).subscribe(
     () => {
       this.notify.info(this.l('SavedSuccessfully'));

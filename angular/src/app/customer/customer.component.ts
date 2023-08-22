@@ -87,7 +87,7 @@ export class customerComponent extends PagedListingComponentBase<CustomerDto> {
     request.isActive = this.isActive;
 
     this._customerService
-      .getAllCustomerWithDivisionAndUser(
+      .getAllCustomerWithDivision(
         request.keyword,
         request.isActive,
         request.skipCount,

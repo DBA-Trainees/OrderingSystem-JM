@@ -17,6 +17,7 @@ namespace OrderingSystem.EntityFrameworkCore
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         public OrderingSystemDbContext(DbContextOptions<OrderingSystemDbContext> options)
             : base(options)

@@ -1,6 +1,8 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using OrderingSystem.Carts.Dto;
 using OrderingSystem.Categories.Dto;
+using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
 using OrderingSystem.Typess.Dto;
 using System;
@@ -16,6 +18,7 @@ namespace OrderingSystem.Foods
         Task<PagedResultDto<CategoriesDto>> GetCategory();
         Task<PagedResultDto<TypeDto>> GetType();
         Task<PagedResultDto<FoodDto>> GetAllFoodWithTypeandCategory(PagedFoodResultRequestDto input);
+        //Task<Food> UpdateIsCart(EntityDto input);
 
     }
 }

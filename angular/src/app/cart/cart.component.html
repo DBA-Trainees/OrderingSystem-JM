@@ -1,11 +1,12 @@
 <section>
-          <!-- <div *ngFor="let food of orders"> -->
+          <div *ngFor="let Cart of Carts">
           <div class="card">
           <div class="card-header p-4">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <p class="text-muted mb-2"> Order ID <span class="fw-bold text-body">1222528743</span></p>
-                <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">12,March 2019</span> </p>
+                <p class="text-muted mb-2" > Cart ID <span class="fw-bold text-body"><b>{{ Cart.id }}</b></span></p>
+                <!-- get current time  -->
+                <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">{{ Cart.food.creationTime}}</span> </p>
               </div>
               <div>
                 <h6 class="mb-0"> <a href="#">View Details</a> </h6>
@@ -15,28 +16,39 @@
           <div class="card-body p-4">
             <div class="d-flex flex-row mb-4 pb-2">
               <div class="flex-fill">
-                <h5 class="bold">Adobo</h5>
-                <p class="text-muted"> Qt: 1 item</p>
-                <h4 class="mb-3"> $ 80 <span class="small text-muted"> via (COD) </span></h4>
-                <p class="text-muted">Tracking Status on: <span class="text-body">11:30pm, Today</span></p>
+                <h5 class="bold">{{Cart.food?.name}}</h5>
+                <p class="text-muted"> Qt: {{Cart.food?.qty}} item</p>
+                <h4 class="mb-3"> $ {{Cart.food?.price}} <span class="small text-muted"> via (COD) </span></h4>
+                <p class="text-muted">Order Status on: <span class="text-body"><b>On Cart</b>, Today</span></p>
+                <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(Cart)">
+                  <i class="fas fa-trash"></i>
+                  {{ "Cancel" | localize }}
+                </button>
               </div>
+              
               <div>
                 <img class="align-self-center img-fluid"
-                  src="assets/img/adobo.png" width="250">
+                [src]="'data:'+ Cart.food?.imageFileType + ';base64,'+ Cart.food?.image" width="250">
               </div>
+        
             </div>
           </div>
         </div>
-      <!-- </div> -->
+        <div class="card-footer p-4">
+          <div class="d-flex justify-content-between">
+            <div class="border-start h-100"></div>
+            <h5 class="fw-normal mb-0"><a href="#!">Cancel</a></h5>
+            <div class="border-start h-100"></div>
+            <h5 class="fw-normal mb-0"> 
+              <button type="button" style="border: transparent;
+             background-color:transparent; color:#007BFF;" (click)="GetCart(Cart.id)" (click)="Checkout(Cart.food.id)">
+              Place Order
+            </button>
+          </h5>
+            <div class="border-start h-100"></div>
+          </div>
+        </div>
+      </div>
         
 
 </section>  
-<div class="card-footer p-4">
-  <div class="d-flex justify-content-between">
-    <div class="border-start h-100"></div>
-    <h5 class="fw-normal mb-0"><a href="#!">Cancel</a></h5>
-    <div class="border-start h-100"></div>
-    <h5 class="fw-normal mb-0"><a href="#!">Place Order</a></h5>
-    <div class="border-start h-100"></div>
-  </div>
-</div>

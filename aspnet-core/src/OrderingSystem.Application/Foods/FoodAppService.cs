@@ -6,9 +6,11 @@ using OrderingSystem.Categories.Dto;
 using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
+using OrderingSystem.Orders.Dto;
 using OrderingSystem.Typess.Dto;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OrderingSystem.Foods
 {
@@ -79,6 +81,21 @@ namespace OrderingSystem.Foods
 
             return new PagedResultDto<FoodDto>(food.Count(), food);
         }
-     
+
+        //public async Task<Food> UpdateIsCart(EntityDto input)
+        //{
+        //   var cart = await _repository.GetAsync(input.Id); 
+        //    if(cart.isCart == false)
+        //    {
+        //        cart.isCart = true;
+        //    }
+        //    else
+        //    {
+        //        cart.isCart = false;
+        //    }
+        //    var UpdateCart = await _repository.UpdateAsync(cart);
+        //    return UpdateCart;
+        //}
+
     }
 }

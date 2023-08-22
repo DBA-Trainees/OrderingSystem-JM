@@ -23,14 +23,12 @@ import { createcustomerComponent } from './customer/create-customer/createcustom
 import { createcategoryComponent } from './category/create-category/createcategory.component';
 import { createdivisionComponent } from './division/create-division/createdivision.component';
 import { createtypeComponent } from './type/create-type/createtype.component';
-import { createorderComponent } from './order/create-order/createorder.component';
 
 import { editcategoryComponent } from './category/edit-category/editcategory.component';
 import { editcustomerComponent } from './customer/edit-customer/editcustomer.component';
 import { edittypeComponent } from './type/edit-type/edittype.component';
 import { editdivisionComponent } from './division/edit-division/editdivision.component';
 import { editfoodComponent } from './food/edit-food/editfood.component';
-import { editorderComponent } from './order/edit-order/editorder.component';
 
 import { dashboardComponent } from './dashboard/dashboard.component';
 
@@ -57,8 +55,6 @@ import { dashboardComponent } from './dashboard/dashboard.component';
                     { path: 'category/editcategory', component: editcategoryComponent, canActivate: [AppRouteGuard] },
                   
                     { path: 'order', component: orderComponent, data: { permission: 'Pages.Order' }, canActivate: [AppRouteGuard] },
-                    { path: 'order/createorder', component: createorderComponent, canActivate: [AppRouteGuard] },
-                    { path: 'order/editorder', component: editorderComponent, canActivate: [AppRouteGuard] },
                   
                     { path: 'dashboard', component: dashboardComponent,data: { permission: 'Pages.Dashboard' },  canActivate: [AppRouteGuard] },
                     { path: 'cart', component: cartComponent, canActivate: [AppRouteGuard] },

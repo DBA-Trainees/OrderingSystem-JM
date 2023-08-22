@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderingSystem.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    partial class OrderingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230818021843_cartStatus")]
+    partial class cartStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1590,9 +1593,6 @@ namespace OrderingSystem.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateOrdered")
-                        .HasColumnType("datetime2");
-
                     b.Property<long?>("DeleterUserId")
                         .HasColumnType("bigint");
 
@@ -1815,9 +1815,6 @@ namespace OrderingSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1848,12 +1845,7 @@ namespace OrderingSystem.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("CustomerId");
 
@@ -2222,10 +2214,6 @@ namespace OrderingSystem.Migrations
 
             modelBuilder.Entity("OrderingSystem.Entities.Order", b =>
                 {
-                    b.HasOne("OrderingSystem.Entities.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
-
                     b.HasOne("OrderingSystem.Entities.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId");
@@ -2233,8 +2221,6 @@ namespace OrderingSystem.Migrations
                     b.HasOne("OrderingSystem.Entities.Food", "Food")
                         .WithMany()
                         .HasForeignKey("FoodId");
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Customer");
 

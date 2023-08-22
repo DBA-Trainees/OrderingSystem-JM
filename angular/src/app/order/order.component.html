@@ -4,13 +4,7 @@
         <div class="col-6">
           <h1>{{ "Orders" | localize }}</h1>
         </div>
-        <div class="col-6 text-right">
-          <a href="javascript:;" (click)="createOrder()" class="btn bg-blue">
-            <i class="fa fa-plus-square"></i>
-            {{ "Create" | localize }}
-            <!-- CREATE HERE -->
-          </a>
-        </div>
+      
       </div>
     </div>
   </section>
@@ -58,26 +52,30 @@
                     <th>{{ "id" | localize }}</th>
                     <th>{{ "Customer name" | localize }}</th>
                     <th>{{ "Customer Order" | localize }}</th>
+                    <th>{{ "Date Ordered" | localize }}</th>
+                    <th>{{ "Order Status" | localize }}</th>
                    
                     <th style="width: 170px">{{ "Actions" | localize }}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <tr *ngFor="let order of orders">
+                    <tr *ngFor="let order of Orders">
                     <td>{{ order.id }}</td>
-                    <td>{{ order.customer.name }}</td>
-                    <td>{{ order.food.name }}</td>
+                    <td>{{ order.customer?.name }}</td>
+                    <td>{{ order.food?.name }}</td>
+                    <td>{{ order.dateOrdered }}</td>
+                    <td>{{ order.status }}</td>
                     
                     <td>
-                      <button type="button" (click)="editOrder(order)" class="btn btn-sm bg-secondary">
+                      <!-- <button type="button" (click)="editorder(order)" class="btn btn-sm bg-secondary">
                         <i class="fas fa-pencil-alt"></i>
                         {{ "Edit" | localize }}
-                      </button>
+                      </button> -->
   
                       <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(order)">
                         <i class="fas fa-trash"></i>
-                        {{ "Delete" | localize }}
+                        {{ "Delete" | localize }} 
                       </button>
                     </td>
                   </tr>

@@ -54,7 +54,6 @@ import { createdivisionComponent } from './division/create-division/createdivisi
 import { createtypeComponent } from './type/create-type/createtype.component';
 import { createcustomerComponent } from './customer/create-customer/createcustomer.component';
 import { createfoodComponent } from './food/create-food/createfood.component';
-import { createorderComponent } from './order/create-order/createorder.component';
 
 //edit function
 import { editcategoryComponent } from './category/edit-category/editcategory.component';
@@ -62,9 +61,8 @@ import { editdivisionComponent } from './division/edit-division/editdivision.com
 import { edittypeComponent } from './type/edit-type/edittype.component';
 import { editcustomerComponent } from './customer/edit-customer/editcustomer.component';
 import { editfoodComponent } from './food/edit-food/editfood.component';
-import { editorderComponent } from './order/edit-order/editorder.component';
 
-import { CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CartServiceProxy, CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
 
@@ -114,9 +112,7 @@ import { CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, Foo
         createcustomerComponent,
         dashboardComponent,
         createfoodComponent,
-        createorderComponent,
         editfoodComponent,
-        editorderComponent,
         orderComponent,
         cartComponent,
 
@@ -144,6 +140,7 @@ import { CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, Foo
         TypeServiceProxy,
         CustomerServiceProxy,
         OrderServiceProxy,
+        CartServiceProxy,
         ]
 })
 export class AppModule {}

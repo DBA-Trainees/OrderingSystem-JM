@@ -15,7 +15,6 @@ import {
   DivisionDto,
   CreateCustomerDto,
 } from "@shared/service-proxies/service-proxies";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "createcustomer",
@@ -23,7 +22,7 @@ import { Router } from "@angular/router";
 })
 export class createcustomerComponent extends AppComponentBase implements OnInit {
   saving = false;
-    customer=  new CreateCustomerDto();
+  customer=  new CreateCustomerDto();
   divisions: DivisionDto[];
   selectedDivision: number = null;
 
@@ -47,6 +46,7 @@ export class createcustomerComponent extends AppComponentBase implements OnInit 
         this.divisions = result.items;
       }
     );
+    
   }
 
   save(): void {
