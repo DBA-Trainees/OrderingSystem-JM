@@ -36,6 +36,7 @@ export class foodComponent extends PagedListingComponentBase <FoodDto> {
   editFood(food:FoodDto):void{
     this.showCreateEditFood(food.id);
   }
+  
 private showCreateEditFood(id?: number): void {
   let CreateorEditFood: BsModalRef;
   if (!id) {

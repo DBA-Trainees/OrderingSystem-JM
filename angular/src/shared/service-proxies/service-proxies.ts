@@ -2562,10 +2562,30 @@ export class OrderServiceProxy {
     }
 
     /**
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllCustomerFood(): Observable<OrderDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Order/GetAllCustomerFood";
+    getAllOrders(keyword: string | undefined, isActive: boolean | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<OrderDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Order/GetAllOrders?";
+        if (keyword === null)
+            throw new Error("The parameter 'keyword' cannot be null.");
+        else if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2577,11 +2597,11 @@ export class OrderServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllCustomerFood(response_);
+            return this.processGetAllOrders(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllCustomerFood(response_ as any);
+                    return this.processGetAllOrders(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<OrderDtoPagedResultDto>;
                 }
@@ -2590,7 +2610,7 @@ export class OrderServiceProxy {
         }));
     }
 
-    protected processGetAllCustomerFood(response: HttpResponseBase): Observable<OrderDtoPagedResultDto> {
+    protected processGetAllOrders(response: HttpResponseBase): Observable<OrderDtoPagedResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2602,6 +2622,62 @@ export class OrderServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = OrderDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    checkout(body: OrderDto | undefined): Observable<OrderDto> {
+        let url_ = this.baseUrl + "/api/services/app/Order/Checkout";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCheckout(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCheckout(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OrderDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OrderDto>;
+        }));
+    }
+
+    protected processCheckout(response: HttpResponseBase): Observable<OrderDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OrderDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4727,11 +4803,13 @@ export class Cart implements ICart {
     isDeleted: boolean;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
-    customer: Customer;
-    food: Food;
     customerId: number | undefined;
+    customer: Customer;
     foodId: number | undefined;
-    status: number;
+    food: Food;
+    status: number | undefined;
+    orderNumber: number | undefined;
+    cartId: number | undefined;
     dateOrdered: moment.Moment;
 
     constructor(data?: ICart) {
@@ -4753,11 +4831,13 @@ export class Cart implements ICart {
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.customer = _data["customer"] ? Customer.fromJS(_data["customer"]) : <any>undefined;
-            this.food = _data["food"] ? Food.fromJS(_data["food"]) : <any>undefined;
             this.customerId = _data["customerId"];
+            this.customer = _data["customer"] ? Customer.fromJS(_data["customer"]) : <any>undefined;
             this.foodId = _data["foodId"];
+            this.food = _data["food"] ? Food.fromJS(_data["food"]) : <any>undefined;
             this.status = _data["status"];
+            this.orderNumber = _data["orderNumber"];
+            this.cartId = _data["cartId"];
             this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
         }
     }
@@ -4779,11 +4859,13 @@ export class Cart implements ICart {
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
-        data["food"] = this.food ? this.food.toJSON() : <any>undefined;
         data["customerId"] = this.customerId;
+        data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
         data["foodId"] = this.foodId;
+        data["food"] = this.food ? this.food.toJSON() : <any>undefined;
         data["status"] = this.status;
+        data["orderNumber"] = this.orderNumber;
+        data["cartId"] = this.cartId;
         data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
         return data;
     }
@@ -4805,20 +4887,25 @@ export interface ICart {
     isDeleted: boolean;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
-    customer: Customer;
-    food: Food;
     customerId: number | undefined;
+    customer: Customer;
     foodId: number | undefined;
-    status: number;
+    food: Food;
+    status: number | undefined;
+    orderNumber: number | undefined;
+    cartId: number | undefined;
     dateOrdered: moment.Moment;
 }
 
 export class CartDto implements ICartDto {
     id: number;
+    cart: Cart;
+    cartId: number | undefined;
     customer: Customer;
     customerId: number | undefined;
     food: Food;
     foodId: number | undefined;
+    orderNumber: number | undefined;
     status: number;
     dateOrdered: moment.Moment;
 
@@ -4834,10 +4921,13 @@ export class CartDto implements ICartDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.cart = _data["cart"] ? Cart.fromJS(_data["cart"]) : <any>undefined;
+            this.cartId = _data["cartId"];
             this.customer = _data["customer"] ? Customer.fromJS(_data["customer"]) : <any>undefined;
             this.customerId = _data["customerId"];
             this.food = _data["food"] ? Food.fromJS(_data["food"]) : <any>undefined;
             this.foodId = _data["foodId"];
+            this.orderNumber = _data["orderNumber"];
             this.status = _data["status"];
             this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
         }
@@ -4853,10 +4943,13 @@ export class CartDto implements ICartDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["cart"] = this.cart ? this.cart.toJSON() : <any>undefined;
+        data["cartId"] = this.cartId;
         data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
         data["customerId"] = this.customerId;
         data["food"] = this.food ? this.food.toJSON() : <any>undefined;
         data["foodId"] = this.foodId;
+        data["orderNumber"] = this.orderNumber;
         data["status"] = this.status;
         data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
         return data;
@@ -4872,10 +4965,13 @@ export class CartDto implements ICartDto {
 
 export interface ICartDto {
     id: number;
+    cart: Cart;
+    cartId: number | undefined;
     customer: Customer;
     customerId: number | undefined;
     food: Food;
     foodId: number | undefined;
+    orderNumber: number | undefined;
     status: number;
     dateOrdered: moment.Moment;
 }
@@ -5246,8 +5342,11 @@ export interface IChangeUserLanguageDto {
 }
 
 export class CreateCartDto implements ICreateCartDto {
+    id: number;
     customerId: number | undefined;
     foodId: number | undefined;
+    cartId: number | undefined;
+    orderNumber: number | undefined;
     status: number;
     dateOrdered: moment.Moment;
 
@@ -5262,8 +5361,11 @@ export class CreateCartDto implements ICreateCartDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.customerId = _data["customerId"];
             this.foodId = _data["foodId"];
+            this.cartId = _data["cartId"];
+            this.orderNumber = _data["orderNumber"];
             this.status = _data["status"];
             this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
         }
@@ -5278,8 +5380,11 @@ export class CreateCartDto implements ICreateCartDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["customerId"] = this.customerId;
         data["foodId"] = this.foodId;
+        data["cartId"] = this.cartId;
+        data["orderNumber"] = this.orderNumber;
         data["status"] = this.status;
         data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
         return data;
@@ -5294,8 +5399,11 @@ export class CreateCartDto implements ICreateCartDto {
 }
 
 export interface ICreateCartDto {
+    id: number;
     customerId: number | undefined;
     foodId: number | undefined;
+    cartId: number | undefined;
+    orderNumber: number | undefined;
     status: number;
     dateOrdered: moment.Moment;
 }
@@ -5347,6 +5455,7 @@ export class CreateCustomerDto implements ICreateCustomerDto {
     id: number;
     name: string | undefined;
     divisionId: number;
+    userId: number;
 
     constructor(data?: ICreateCustomerDto) {
         if (data) {
@@ -5362,6 +5471,7 @@ export class CreateCustomerDto implements ICreateCustomerDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.divisionId = _data["divisionId"];
+            this.userId = _data["userId"];
         }
     }
 
@@ -5377,6 +5487,7 @@ export class CreateCustomerDto implements ICreateCustomerDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["divisionId"] = this.divisionId;
+        data["userId"] = this.userId;
         return data;
     }
 
@@ -5392,6 +5503,7 @@ export interface ICreateCustomerDto {
     id: number;
     name: string | undefined;
     divisionId: number;
+    userId: number;
 }
 
 export class CreateDivisionDto implements ICreateDivisionDto {
@@ -5517,11 +5629,15 @@ export interface ICreateFoodDto {
 }
 
 export class CreateOrderDto implements ICreateOrderDto {
+    id: number;
     customerId: number;
     foodId: number;
-    cartId: number;
-    status: number;
-    dateOrdered: moment.Moment;
+    size: string | undefined;
+    qty: number | undefined;
+    status: number | undefined;
+    orderNumber: string | undefined;
+    orders: OrderDto[] | undefined;
+    dateOrdered: moment.Moment | undefined;
 
     constructor(data?: ICreateOrderDto) {
         if (data) {
@@ -5534,10 +5650,18 @@ export class CreateOrderDto implements ICreateOrderDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.customerId = _data["customerId"];
             this.foodId = _data["foodId"];
-            this.cartId = _data["cartId"];
+            this.size = _data["size"];
+            this.qty = _data["qty"];
             this.status = _data["status"];
+            this.orderNumber = _data["orderNumber"];
+            if (Array.isArray(_data["orders"])) {
+                this.orders = [] as any;
+                for (let item of _data["orders"])
+                    this.orders.push(OrderDto.fromJS(item));
+            }
             this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
         }
     }
@@ -5551,10 +5675,18 @@ export class CreateOrderDto implements ICreateOrderDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["customerId"] = this.customerId;
         data["foodId"] = this.foodId;
-        data["cartId"] = this.cartId;
+        data["size"] = this.size;
+        data["qty"] = this.qty;
         data["status"] = this.status;
+        data["orderNumber"] = this.orderNumber;
+        if (Array.isArray(this.orders)) {
+            data["orders"] = [];
+            for (let item of this.orders)
+                data["orders"].push(item.toJSON());
+        }
         data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
         return data;
     }
@@ -5568,11 +5700,15 @@ export class CreateOrderDto implements ICreateOrderDto {
 }
 
 export interface ICreateOrderDto {
+    id: number;
     customerId: number;
     foodId: number;
-    cartId: number;
-    status: number;
-    dateOrdered: moment.Moment;
+    size: string | undefined;
+    qty: number | undefined;
+    status: number | undefined;
+    orderNumber: string | undefined;
+    orders: OrderDto[] | undefined;
+    dateOrdered: moment.Moment | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
@@ -5831,6 +5967,7 @@ export class Customer implements ICustomer {
     name: string | undefined;
     divisionId: number | undefined;
     division: Division;
+    user: User;
 
     constructor(data?: ICustomer) {
         if (data) {
@@ -5854,6 +5991,7 @@ export class Customer implements ICustomer {
             this.name = _data["name"];
             this.divisionId = _data["divisionId"];
             this.division = _data["division"] ? Division.fromJS(_data["division"]) : <any>undefined;
+            this.user = _data["user"] ? User.fromJS(_data["user"]) : <any>undefined;
         }
     }
 
@@ -5877,6 +6015,7 @@ export class Customer implements ICustomer {
         data["name"] = this.name;
         data["divisionId"] = this.divisionId;
         data["division"] = this.division ? this.division.toJSON() : <any>undefined;
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         return data;
     }
 
@@ -5900,6 +6039,7 @@ export interface ICustomer {
     name: string | undefined;
     divisionId: number | undefined;
     division: Division;
+    user: User;
 }
 
 export class CustomerDto implements ICustomerDto {
@@ -5907,6 +6047,8 @@ export class CustomerDto implements ICustomerDto {
     name: string | undefined;
     divisionId: number;
     division: DivisionDto;
+    userId: number;
+    user: UserDto;
 
     constructor(data?: ICustomerDto) {
         if (data) {
@@ -5923,6 +6065,8 @@ export class CustomerDto implements ICustomerDto {
             this.name = _data["name"];
             this.divisionId = _data["divisionId"];
             this.division = _data["division"] ? DivisionDto.fromJS(_data["division"]) : <any>undefined;
+            this.userId = _data["userId"];
+            this.user = _data["user"] ? UserDto.fromJS(_data["user"]) : <any>undefined;
         }
     }
 
@@ -5939,6 +6083,8 @@ export class CustomerDto implements ICustomerDto {
         data["name"] = this.name;
         data["divisionId"] = this.divisionId;
         data["division"] = this.division ? this.division.toJSON() : <any>undefined;
+        data["userId"] = this.userId;
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
         return data;
     }
 
@@ -5955,6 +6101,8 @@ export interface ICustomerDto {
     name: string | undefined;
     divisionId: number;
     division: DivisionDto;
+    userId: number;
+    user: UserDto;
 }
 
 export class CustomerDtoPagedResultDto implements ICustomerDtoPagedResultDto {
@@ -6915,9 +7063,11 @@ export class OrderDto implements IOrderDto {
     customer: Customer;
     foodId: number;
     food: Food;
-    cartId: number;
-    cart: Cart;
-    status: number;
+    size: string | undefined;
+    qty: number;
+    status: number | undefined;
+    orderNumber: string | undefined;
+    orders: OrderDto[] | undefined;
     dateOrdered: moment.Moment;
 
     constructor(data?: IOrderDto) {
@@ -6936,9 +7086,15 @@ export class OrderDto implements IOrderDto {
             this.customer = _data["customer"] ? Customer.fromJS(_data["customer"]) : <any>undefined;
             this.foodId = _data["foodId"];
             this.food = _data["food"] ? Food.fromJS(_data["food"]) : <any>undefined;
-            this.cartId = _data["cartId"];
-            this.cart = _data["cart"] ? Cart.fromJS(_data["cart"]) : <any>undefined;
+            this.size = _data["size"];
+            this.qty = _data["qty"];
             this.status = _data["status"];
+            this.orderNumber = _data["orderNumber"];
+            if (Array.isArray(_data["orders"])) {
+                this.orders = [] as any;
+                for (let item of _data["orders"])
+                    this.orders.push(OrderDto.fromJS(item));
+            }
             this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
         }
     }
@@ -6957,9 +7113,15 @@ export class OrderDto implements IOrderDto {
         data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
         data["foodId"] = this.foodId;
         data["food"] = this.food ? this.food.toJSON() : <any>undefined;
-        data["cartId"] = this.cartId;
-        data["cart"] = this.cart ? this.cart.toJSON() : <any>undefined;
+        data["size"] = this.size;
+        data["qty"] = this.qty;
         data["status"] = this.status;
+        data["orderNumber"] = this.orderNumber;
+        if (Array.isArray(this.orders)) {
+            data["orders"] = [];
+            for (let item of this.orders)
+                data["orders"].push(item.toJSON());
+        }
         data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
         return data;
     }
@@ -6978,9 +7140,11 @@ export interface IOrderDto {
     customer: Customer;
     foodId: number;
     food: Food;
-    cartId: number;
-    cart: Cart;
-    status: number;
+    size: string | undefined;
+    qty: number;
+    status: number | undefined;
+    orderNumber: string | undefined;
+    orders: OrderDto[] | undefined;
     dateOrdered: moment.Moment;
 }
 
@@ -7652,6 +7816,81 @@ export interface IRoleListDtoListResultDto {
     items: RoleListDto[] | undefined;
 }
 
+export class Setting implements ISetting {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    tenantId: number | undefined;
+    userId: number | undefined;
+    name: string;
+    value: string | undefined;
+
+    constructor(data?: ISetting) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.tenantId = _data["tenantId"];
+            this.userId = _data["userId"];
+            this.name = _data["name"];
+            this.value = _data["value"];
+        }
+    }
+
+    static fromJS(data: any): Setting {
+        data = typeof data === 'object' ? data : {};
+        let result = new Setting();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        data["name"] = this.name;
+        data["value"] = this.value;
+        return data;
+    }
+
+    clone(): Setting {
+        const json = this.toJSON();
+        let result = new Setting();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ISetting {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    tenantId: number | undefined;
+    userId: number | undefined;
+    name: string;
+    value: string | undefined;
+}
+
 export enum TenantAvailabilityState {
     _1 = 1,
     _2 = 2,
@@ -7996,6 +8235,316 @@ export interface ITypes {
     name: string | undefined;
 }
 
+export class User implements IUser {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    authenticationSource: string | undefined;
+    userName: string;
+    tenantId: number | undefined;
+    emailAddress: string;
+    name: string;
+    surname: string;
+    readonly fullName: string | undefined;
+    password: string;
+    emailConfirmationCode: string | undefined;
+    passwordResetCode: string | undefined;
+    lockoutEndDateUtc: moment.Moment | undefined;
+    accessFailedCount: number;
+    isLockoutEnabled: boolean;
+    phoneNumber: string | undefined;
+    isPhoneNumberConfirmed: boolean;
+    securityStamp: string | undefined;
+    isTwoFactorEnabled: boolean;
+    logins: UserLogin[] | undefined;
+    roles: UserRole[] | undefined;
+    claims: UserClaim[] | undefined;
+    permissions: UserPermissionSetting[] | undefined;
+    settings: Setting[] | undefined;
+    isEmailConfirmed: boolean;
+    isActive: boolean;
+    normalizedUserName: string;
+    normalizedEmailAddress: string;
+    concurrencyStamp: string | undefined;
+    tokens: UserToken[] | undefined;
+    deleterUser: User;
+    creatorUser: User;
+    lastModifierUser: User;
+
+    constructor(data?: IUser) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.authenticationSource = _data["authenticationSource"];
+            this.userName = _data["userName"];
+            this.tenantId = _data["tenantId"];
+            this.emailAddress = _data["emailAddress"];
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            (<any>this).fullName = _data["fullName"];
+            this.password = _data["password"];
+            this.emailConfirmationCode = _data["emailConfirmationCode"];
+            this.passwordResetCode = _data["passwordResetCode"];
+            this.lockoutEndDateUtc = _data["lockoutEndDateUtc"] ? moment(_data["lockoutEndDateUtc"].toString()) : <any>undefined;
+            this.accessFailedCount = _data["accessFailedCount"];
+            this.isLockoutEnabled = _data["isLockoutEnabled"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.isPhoneNumberConfirmed = _data["isPhoneNumberConfirmed"];
+            this.securityStamp = _data["securityStamp"];
+            this.isTwoFactorEnabled = _data["isTwoFactorEnabled"];
+            if (Array.isArray(_data["logins"])) {
+                this.logins = [] as any;
+                for (let item of _data["logins"])
+                    this.logins.push(UserLogin.fromJS(item));
+            }
+            if (Array.isArray(_data["roles"])) {
+                this.roles = [] as any;
+                for (let item of _data["roles"])
+                    this.roles.push(UserRole.fromJS(item));
+            }
+            if (Array.isArray(_data["claims"])) {
+                this.claims = [] as any;
+                for (let item of _data["claims"])
+                    this.claims.push(UserClaim.fromJS(item));
+            }
+            if (Array.isArray(_data["permissions"])) {
+                this.permissions = [] as any;
+                for (let item of _data["permissions"])
+                    this.permissions.push(UserPermissionSetting.fromJS(item));
+            }
+            if (Array.isArray(_data["settings"])) {
+                this.settings = [] as any;
+                for (let item of _data["settings"])
+                    this.settings.push(Setting.fromJS(item));
+            }
+            this.isEmailConfirmed = _data["isEmailConfirmed"];
+            this.isActive = _data["isActive"];
+            this.normalizedUserName = _data["normalizedUserName"];
+            this.normalizedEmailAddress = _data["normalizedEmailAddress"];
+            this.concurrencyStamp = _data["concurrencyStamp"];
+            if (Array.isArray(_data["tokens"])) {
+                this.tokens = [] as any;
+                for (let item of _data["tokens"])
+                    this.tokens.push(UserToken.fromJS(item));
+            }
+            this.deleterUser = _data["deleterUser"] ? User.fromJS(_data["deleterUser"]) : <any>undefined;
+            this.creatorUser = _data["creatorUser"] ? User.fromJS(_data["creatorUser"]) : <any>undefined;
+            this.lastModifierUser = _data["lastModifierUser"] ? User.fromJS(_data["lastModifierUser"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): User {
+        data = typeof data === 'object' ? data : {};
+        let result = new User();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["authenticationSource"] = this.authenticationSource;
+        data["userName"] = this.userName;
+        data["tenantId"] = this.tenantId;
+        data["emailAddress"] = this.emailAddress;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["fullName"] = this.fullName;
+        data["password"] = this.password;
+        data["emailConfirmationCode"] = this.emailConfirmationCode;
+        data["passwordResetCode"] = this.passwordResetCode;
+        data["lockoutEndDateUtc"] = this.lockoutEndDateUtc ? this.lockoutEndDateUtc.toISOString() : <any>undefined;
+        data["accessFailedCount"] = this.accessFailedCount;
+        data["isLockoutEnabled"] = this.isLockoutEnabled;
+        data["phoneNumber"] = this.phoneNumber;
+        data["isPhoneNumberConfirmed"] = this.isPhoneNumberConfirmed;
+        data["securityStamp"] = this.securityStamp;
+        data["isTwoFactorEnabled"] = this.isTwoFactorEnabled;
+        if (Array.isArray(this.logins)) {
+            data["logins"] = [];
+            for (let item of this.logins)
+                data["logins"].push(item.toJSON());
+        }
+        if (Array.isArray(this.roles)) {
+            data["roles"] = [];
+            for (let item of this.roles)
+                data["roles"].push(item.toJSON());
+        }
+        if (Array.isArray(this.claims)) {
+            data["claims"] = [];
+            for (let item of this.claims)
+                data["claims"].push(item.toJSON());
+        }
+        if (Array.isArray(this.permissions)) {
+            data["permissions"] = [];
+            for (let item of this.permissions)
+                data["permissions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.settings)) {
+            data["settings"] = [];
+            for (let item of this.settings)
+                data["settings"].push(item.toJSON());
+        }
+        data["isEmailConfirmed"] = this.isEmailConfirmed;
+        data["isActive"] = this.isActive;
+        data["normalizedUserName"] = this.normalizedUserName;
+        data["normalizedEmailAddress"] = this.normalizedEmailAddress;
+        data["concurrencyStamp"] = this.concurrencyStamp;
+        if (Array.isArray(this.tokens)) {
+            data["tokens"] = [];
+            for (let item of this.tokens)
+                data["tokens"].push(item.toJSON());
+        }
+        data["deleterUser"] = this.deleterUser ? this.deleterUser.toJSON() : <any>undefined;
+        data["creatorUser"] = this.creatorUser ? this.creatorUser.toJSON() : <any>undefined;
+        data["lastModifierUser"] = this.lastModifierUser ? this.lastModifierUser.toJSON() : <any>undefined;
+        return data;
+    }
+
+    clone(): User {
+        const json = this.toJSON();
+        let result = new User();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUser {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    authenticationSource: string | undefined;
+    userName: string;
+    tenantId: number | undefined;
+    emailAddress: string;
+    name: string;
+    surname: string;
+    fullName: string | undefined;
+    password: string;
+    emailConfirmationCode: string | undefined;
+    passwordResetCode: string | undefined;
+    lockoutEndDateUtc: moment.Moment | undefined;
+    accessFailedCount: number;
+    isLockoutEnabled: boolean;
+    phoneNumber: string | undefined;
+    isPhoneNumberConfirmed: boolean;
+    securityStamp: string | undefined;
+    isTwoFactorEnabled: boolean;
+    logins: UserLogin[] | undefined;
+    roles: UserRole[] | undefined;
+    claims: UserClaim[] | undefined;
+    permissions: UserPermissionSetting[] | undefined;
+    settings: Setting[] | undefined;
+    isEmailConfirmed: boolean;
+    isActive: boolean;
+    normalizedUserName: string;
+    normalizedEmailAddress: string;
+    concurrencyStamp: string | undefined;
+    tokens: UserToken[] | undefined;
+    deleterUser: User;
+    creatorUser: User;
+    lastModifierUser: User;
+}
+
+export class UserClaim implements IUserClaim {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    tenantId: number | undefined;
+    userId: number;
+    claimType: string | undefined;
+    claimValue: string | undefined;
+
+    constructor(data?: IUserClaim) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.tenantId = _data["tenantId"];
+            this.userId = _data["userId"];
+            this.claimType = _data["claimType"];
+            this.claimValue = _data["claimValue"];
+        }
+    }
+
+    static fromJS(data: any): UserClaim {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserClaim();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        data["claimType"] = this.claimType;
+        data["claimValue"] = this.claimValue;
+        return data;
+    }
+
+    clone(): UserClaim {
+        const json = this.toJSON();
+        let result = new UserClaim();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserClaim {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    tenantId: number | undefined;
+    userId: number;
+    claimType: string | undefined;
+    claimValue: string | undefined;
+}
+
 export class UserDto implements IUserDto {
     id: number;
     userName: string;
@@ -8138,6 +8687,65 @@ export interface IUserDtoPagedResultDto {
     totalCount: number;
 }
 
+export class UserLogin implements IUserLogin {
+    id: number;
+    tenantId: number | undefined;
+    userId: number;
+    loginProvider: string;
+    providerKey: string;
+
+    constructor(data?: IUserLogin) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.tenantId = _data["tenantId"];
+            this.userId = _data["userId"];
+            this.loginProvider = _data["loginProvider"];
+            this.providerKey = _data["providerKey"];
+        }
+    }
+
+    static fromJS(data: any): UserLogin {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserLogin();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        data["loginProvider"] = this.loginProvider;
+        data["providerKey"] = this.providerKey;
+        return data;
+    }
+
+    clone(): UserLogin {
+        const json = this.toJSON();
+        let result = new UserLogin();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserLogin {
+    id: number;
+    tenantId: number | undefined;
+    userId: number;
+    loginProvider: string;
+    providerKey: string;
+}
+
 export class UserLoginInfoDto implements IUserLoginInfoDto {
     id: number;
     name: string | undefined;
@@ -8195,6 +8803,203 @@ export interface IUserLoginInfoDto {
     surname: string | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
+}
+
+export class UserPermissionSetting implements IUserPermissionSetting {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    tenantId: number | undefined;
+    name: string;
+    isGranted: boolean;
+    userId: number;
+
+    constructor(data?: IUserPermissionSetting) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.tenantId = _data["tenantId"];
+            this.name = _data["name"];
+            this.isGranted = _data["isGranted"];
+            this.userId = _data["userId"];
+        }
+    }
+
+    static fromJS(data: any): UserPermissionSetting {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserPermissionSetting();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["tenantId"] = this.tenantId;
+        data["name"] = this.name;
+        data["isGranted"] = this.isGranted;
+        data["userId"] = this.userId;
+        return data;
+    }
+
+    clone(): UserPermissionSetting {
+        const json = this.toJSON();
+        let result = new UserPermissionSetting();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserPermissionSetting {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    tenantId: number | undefined;
+    name: string;
+    isGranted: boolean;
+    userId: number;
+}
+
+export class UserRole implements IUserRole {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    tenantId: number | undefined;
+    userId: number;
+    roleId: number;
+
+    constructor(data?: IUserRole) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.tenantId = _data["tenantId"];
+            this.userId = _data["userId"];
+            this.roleId = _data["roleId"];
+        }
+    }
+
+    static fromJS(data: any): UserRole {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserRole();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        data["roleId"] = this.roleId;
+        return data;
+    }
+
+    clone(): UserRole {
+        const json = this.toJSON();
+        let result = new UserRole();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserRole {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    tenantId: number | undefined;
+    userId: number;
+    roleId: number;
+}
+
+export class UserToken implements IUserToken {
+    id: number;
+    tenantId: number | undefined;
+    userId: number;
+    loginProvider: string | undefined;
+    name: string | undefined;
+    value: string | undefined;
+    expireDate: moment.Moment | undefined;
+
+    constructor(data?: IUserToken) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.tenantId = _data["tenantId"];
+            this.userId = _data["userId"];
+            this.loginProvider = _data["loginProvider"];
+            this.name = _data["name"];
+            this.value = _data["value"];
+            this.expireDate = _data["expireDate"] ? moment(_data["expireDate"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): UserToken {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserToken();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["tenantId"] = this.tenantId;
+        data["userId"] = this.userId;
+        data["loginProvider"] = this.loginProvider;
+        data["name"] = this.name;
+        data["value"] = this.value;
+        data["expireDate"] = this.expireDate ? this.expireDate.toISOString() : <any>undefined;
+        return data;
+    }
+
+    clone(): UserToken {
+        const json = this.toJSON();
+        let result = new UserToken();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserToken {
+    id: number;
+    tenantId: number | undefined;
+    userId: number;
+    loginProvider: string | undefined;
+    name: string | undefined;
+    value: string | undefined;
+    expireDate: moment.Moment | undefined;
 }
 
 export class ApiException extends Error {

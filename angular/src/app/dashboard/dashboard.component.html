@@ -65,25 +65,9 @@
                   <br />
                   <h6><b>Price :</b>{{ food.price }}</h6>
                   <h6><b>Category:</b> {{ food.category.name }}</h6>  
-                  <h6><b>Quantity</b></h6>
-                  <input
-                    style="margin-bottom: 10px"
-                    type="number"
-                    min="1"
-                    class="form-control"
-                    id="quantity"
-                    name="quantity"
-                  />
-                  <label for="Size" class="form-label">Size</label>
-                  <div class="mb-3">
-                    <select name="name" id="name" class="form-control">
-                      <option>Small</option>
-                      <option>Medium</option>
-                      <option>Large</option>
-                    </select>
-                  </div>
-                  <a style="margin-top: 1vh" (click)="addToCart(food.id)" class="btn btn-primary"
-                    >Add to cart</a>
+          
+                  <a style="margin-top: 1vh" (click)="viewOrder(food)" class="btn btn-primary"
+                    >View product</a>
                 </div>
               </div>
             </div>

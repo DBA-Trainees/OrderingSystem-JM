@@ -54,6 +54,7 @@
                     <th>{{ "Customer Order" | localize }}</th>
                     <th>{{ "Date Ordered" | localize }}</th>
                     <th>{{ "Order Status" | localize }}</th>
+                    <th>{{ "Order Number" | localize }}</th>
                    
                     <th style="width: 170px">{{ "Actions" | localize }}</th>
                   </tr>
@@ -65,7 +66,14 @@
                     <td>{{ order.customer?.name }}</td>
                     <td>{{ order.food?.name }}</td>
                     <td>{{ order.dateOrdered }}</td>
-                    <td>{{ order.status }}</td>
+                    <td *ngIf="order.status == 1 ">
+                      Cart
+                      </td>
+                      <td *ngIf="order.status == 2 ">
+                        Place order
+                        </td>
+                        
+                    <td>{{ order.orderNumber }}</td>
                     
                     <td>
                       <!-- <button type="button" (click)="editorder(order)" class="btn btn-sm bg-secondary">

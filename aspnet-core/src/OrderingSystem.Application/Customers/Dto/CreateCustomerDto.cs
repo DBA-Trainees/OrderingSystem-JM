@@ -11,6 +11,8 @@ namespace OrderingSystem.Customers.Dto
     {
         public string Name { get; set; }
         public int DivisionId { get; set; } //FK
+        public int UserId { get; set; } //FK
+
 
     }
 }

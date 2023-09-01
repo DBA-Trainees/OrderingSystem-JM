@@ -47,6 +47,7 @@ import { customerComponent } from './customer/customer.component';
 import { dashboardComponent } from './dashboard/dashboard.component';
 import { orderComponent } from './order/order.component';
 import { cartComponent } from './cart/cart.component';
+import { viewOrderComponent } from './dashboard/dashboard-ViewOrder/viewOrder.component';
 
 // create function
 import { createcategoryComponent } from './category/create-category/createcategory.component';
@@ -115,6 +116,7 @@ import { CartServiceProxy, CategoriesServiceProxy, CustomerServiceProxy, Divisio
         editfoodComponent,
         orderComponent,
         cartComponent,
+        viewOrderComponent,
 
     ],
     imports: [

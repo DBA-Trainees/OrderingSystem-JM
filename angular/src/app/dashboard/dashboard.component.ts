@@ -6,18 +6,18 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-  CartDto,
   CartServiceProxy,
   CreateCartDto,
   CustomerServiceProxy,
   FoodDto,
   FoodDtoPagedResultDto,
   FoodServiceProxy,
-  OrderServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { Subject, finalize } from "rxjs";
+import { finalize } from "rxjs";
 import { AbpSessionService } from "abp-ng2-module";
+import { viewOrderComponent } from "./dashboard-ViewOrder/viewOrder.component";
+import * as moment from "moment";
 
 class PagedFoodResultRequestDto extends PagedRequestDto {
   keyword: string;
@@ -35,19 +35,19 @@ export class dashboardComponent extends PagedListingComponentBase<FoodDto> {
   }
   count: number;
   foods: FoodDto[] = [];
+  id: number;
+
   AddToCart = new CreateCartDto();
   keyword = "";
   isActive: boolean;
   advancedFiltersVisible = false;
   saving = false;
-  selectedCustomer: number = null;
-  SelectedFood: number = null;
+  selectedCategory: number = null;
 
   constructor(
     injector: Injector,
     private _foodService: FoodServiceProxy,
     private _customerService: CustomerServiceProxy,
-    // private _orderService: OrderServiceProxy,
     private _cartService: CartServiceProxy,
     private bsModalRef: BsModalRef,
     private _sessionService: AbpSessionService,
@@ -84,6 +84,20 @@ export class dashboardComponent extends PagedListingComponentBase<FoodDto> {
       });
   }
 
+  viewOrder(food: FoodDto): void {
+    this.showViewOrder(food.id);
+  }
+
+  private showViewOrder(id?: number): void {
+    let viewOrder: BsModalRef;
+    viewOrder = this._modalService.show(viewOrderComponent, {
+      class: "modal-lg",
+      initialState: {
+        id: id,
+      },
+    });
+  }
+
   showModal(): void {
     this.cartModal();
   }
@@ -95,26 +109,4 @@ export class dashboardComponent extends PagedListingComponentBase<FoodDto> {
     });
   }
 
-  addToCart(id: number): void {
-    this.saving = true;
-    this.AddToCart.status = 1;
-    this.AddToCart.foodId = id;
-
-    this._customerService
-      .get(this._sessionService.userId)
-      .subscribe((result) => {
-        this.AddToCart.customerId = result.id;
-
-        this._cartService.create(this.AddToCart).subscribe(
-          () => {
-            this.notify.info(this.l("Added to cart"));
-            this.bsModalRef.hide();
-            this.onSave.emit();
-          },
-          () => {
-            this.saving = false;
-          }
-        );
-      });
-  }
 }

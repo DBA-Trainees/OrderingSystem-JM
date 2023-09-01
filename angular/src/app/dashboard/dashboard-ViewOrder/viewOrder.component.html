@@ -1,0 +1,102 @@
+<section>
+  <div>
+    <div class="card">
+      <div class="card-header p-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <p class="text-muted mb-2">
+              Food ID
+              <span class="fw-bold text-body"
+                ><b>{{ food.id }}</b></span
+              >
+            </p>
+            <p class="text-muted mb-0">
+              Place On <span class="fw-bold text-body">{{ dateNow }}</span>
+            </p>
+          </div>
+          <div>
+            <!-- <h6 class="mb-0"><a href="#">View Details</a></h6> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body p-4">
+        <div class="d-flex flex-row mb-4 pb-2">
+          <div class="flex-fill">
+            <h5 class="bold">
+              <b>{{ food.name }}</b>
+            </h5>
+
+            <p class="text-muted">Quantity:</p>
+            <input
+              class="form-control"
+              style="width: 300px"
+              type="number"
+              min="1"
+              id="quantity"
+              name="quantity"
+              [(ngModel)]="orderQuantity"
+              #nameModel="ngModel"
+              max="{{ food.qty }}"
+              value="1"
+              min="1"
+            />
+
+            <label for="Size" class="form-label">Size</label>
+            <div class="mb-3">
+              <select
+                name="name"
+                id="name"
+                style="width: 300px"
+                class="form-control"
+                [ngModel]="food.size"
+              >
+                <option>Small</option>
+                <option>Medium</option>
+                <option>Large</option>
+              </select>
+            </div>
+
+            <h4 class="mb-3">
+              ${{ food.price }}
+              <span class="small text-muted"> via (COD) </span>
+            </h4>
+
+            <p class="text-muted">
+              Order Status on:
+              <span class="text-body"><b>On Dashboard</b></span>
+            </p>
+          </div>
+          <div>
+            <img
+              class="align-self-center img-fluid"
+              [src]="'data:' + food.imageFileType + '; base64,' + food.image"
+              width="350"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer p-4">
+      <div class="d-flex justify-content-between">
+        <div class="border-start h-100"></div>
+        <h5 class="fw-normal mb-0"><a href="#!">Cancel</a></h5>
+        <div class="border-start h-100"></div>
+        <h5 class="fw-normal mb-0">
+          <button
+            type="button"
+            style="
+              border: transparent;
+              background-color: transparent;
+              color: #007bff;
+            "
+            (click)="AddToCart(id)"
+          >
+            Add to cart
+          </button>
+        </h5>
+        <div class="border-start h-100"></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -16,6 +16,7 @@ import { divisionComponent } from './division/division.component';
 import { categoryComponent } from './category/category.component';
 import { orderComponent } from './order/order.component';
 import { cartComponent } from './cart/cart.component';
+import { viewOrderComponent } from './dashboard/dashboard-ViewOrder/viewOrder.component';
 
 
 import { createfoodComponent } from './food/create-food/createfood.component';
@@ -57,6 +58,7 @@ import { dashboardComponent } from './dashboard/dashboard.component';
                     { path: 'order', component: orderComponent, data: { permission: 'Pages.Order' }, canActivate: [AppRouteGuard] },
                   
                     { path: 'dashboard', component: dashboardComponent,data: { permission: 'Pages.Dashboard' },  canActivate: [AppRouteGuard] },
+                    { path: 'dashboard/viewOrdered', component: viewOrderComponent, canActivate: [AppRouteGuard] },
                     { path: 'cart', component: cartComponent, canActivate: [AppRouteGuard] },
                    
                     { path: 'division', component: divisionComponent, data: { permission: 'Pages.Division' }, canActivate: [AppRouteGuard] },

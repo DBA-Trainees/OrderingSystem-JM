@@ -43,6 +43,7 @@ export class customerComponent extends PagedListingComponentBase<CustomerDto> {
   editcustomer(customer: CustomerDto): void {
     this.showCreateEditCustomer(customer.id);
   }
+  
   private showCreateEditCustomer(id?: number): void {
     let CreateorEditCustomer: BsModalRef;
     if (!id) {

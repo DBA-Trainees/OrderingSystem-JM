@@ -1,12 +1,12 @@
 <section>
-          <div *ngFor="let Cart of Carts">
+          <div *ngFor="let Order of Orders">
           <div class="card">
           <div class="card-header p-4">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <p class="text-muted mb-2" > Cart ID <span class="fw-bold text-body"><b>{{ Cart.id }}</b></span></p>
+                <p class="text-muted mb-2" > Cart ID <span class="fw-bold text-body"><b>{{ Order.id }}</b></span></p>
                 <!-- get current time  -->
-                <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">{{ Cart.food.creationTime}}</span> </p>
+                <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">{{ Order.food.creationTime}}</span> </p>
               </div>
               <div>
                 <h6 class="mb-0"> <a href="#">View Details</a> </h6>
@@ -16,11 +16,12 @@
           <div class="card-body p-4">
             <div class="d-flex flex-row mb-4 pb-2">
               <div class="flex-fill">
-                <h5 class="bold">{{Cart.food?.name}}</h5>
-                <p class="text-muted"> Qt: {{Cart.food?.qty}} item</p>
-                <h4 class="mb-3"> $ {{Cart.food?.price}} <span class="small text-muted"> via (COD) </span></h4>
+                <h5 class="bold">{{Order.food?.name}}</h5>
+                <p class="text-muted"> Qt:<b> {{Order.qty}} item</b></p>
+                <p class="text-muted"> Size: <b>{{Order.size}} item</b></p>
+                <h4 class="mb-3"> $ {{Order.food?.price}} <span class="small text-muted"> via (COD) </span></h4>
                 <p class="text-muted">Order Status on: <span class="text-body"><b>On Cart</b>, Today</span></p>
-                <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(Cart)">
+                <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(Order)">
                   <i class="fas fa-trash"></i>
                   {{ "Cancel" | localize }}
                 </button>
@@ -28,12 +29,15 @@
               
               <div>
                 <img class="align-self-center img-fluid"
-                [src]="'data:'+ Cart.food?.imageFileType + ';base64,'+ Cart.food?.image" width="250">
+                [src]="'data:'+ Order.food?.imageFileType + ';base64,'+ Order.food?.image" width="250">
               </div>
         
             </div>
           </div>
         </div>
+       
+      </div>
+        <!-- dito po sa may comment -->
         <div class="card-footer p-4">
           <div class="d-flex justify-content-between">
             <div class="border-start h-100"></div>
@@ -41,14 +45,12 @@
             <div class="border-start h-100"></div>
             <h5 class="fw-normal mb-0"> 
               <button type="button" style="border: transparent;
-             background-color:transparent; color:#007BFF;" (click)="GetCart(Cart.id)" (click)="Checkout(Cart.food.id)">
+             background-color:transparent; color:#007BFF;" 
+             (click)="Checkout(Order.orderNumber)">
               Place Order
             </button>
           </h5>
             <div class="border-start h-100"></div>
           </div>
         </div>
-      </div>
-        
-
 </section>  

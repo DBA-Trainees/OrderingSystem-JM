@@ -26,16 +26,16 @@ class PagedOrderResultRequestDto extends PagedRequestDto {
   // styleUrls: ['./order.component.css']
 })
 export class orderComponent extends PagedListingComponentBase<OrderDto> {
+  
   Orders: OrderDto[] = [];
-  // orders: OrderDto[] = [];
   keyword = "";
   isActive: boolean | null;
   advancedFiltersVisible = false;
   id: number;
 
   constructor(injector: Injector,
-    private _CartService: CartServiceProxy,
-    private _orderService: OrderServiceProxy
+    private _OrderService: OrderServiceProxy,
+    // private _orderService: OrderServiceProxy
      ) {
     super(injector);
   }
@@ -47,8 +47,8 @@ export class orderComponent extends PagedListingComponentBase<OrderDto> {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
 
-    this._orderService
-      .getAllCustomerAndFood(
+    this._OrderService
+      .getAllOrders(
         request.keyword,
         request.isActive,
         request.skipCount,
@@ -68,4 +68,5 @@ export class orderComponent extends PagedListingComponentBase<OrderDto> {
   protected delete(entity: OrderDto): void {
     throw new Error("Method not implemented.");
   }
+
 }

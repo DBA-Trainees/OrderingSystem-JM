@@ -21,8 +21,8 @@ namespace OrderingSystem.Carts
     {
         private readonly IRepository<Cart, int> _repository;
         private readonly IRepository<Order, int> _orderrepository;
-        private readonly IRepository<Food, int> _foodrepository;
         private readonly IRepository<Category, int> _categoryrepository;
+        private readonly IRepository<Food, int> _foodrepository;
         private readonly IRepository<Types, int> _typesrepository;
 
 
@@ -70,27 +70,6 @@ namespace OrderingSystem.Carts
 
             return new PagedResultDto<CartDto>(cart.Count(), cart);
         }
-
-
-        //public async Task<PagedResultDto<CategoriesDto>> GetCategory()
-        //{
-        //    //To view the innerjoined data in dropdown
-        //    var query = await _categoryrepository.GetAll()
-        //        .Select(x => ObjectMapper.Map<CategoriesDto>(x))
-        //        .ToListAsync();
-
-        //    return new PagedResultDto<CategoriesDto>(query.Count(), query);
-        //}
-
-        //public async Task<PagedResultDto<TypeDto>> GetType()
-        //{
-        //    var type = await _typesrepository.GetAll()
-        //        .Select(x => ObjectMapper.Map<TypeDto>(x))
-        //        .ToListAsync();
-
-        //    return new PagedResultDto<TypeDto>(type.Count(), type);
-        //}
-
         public async Task<PagedResultDto<CartDto>> GetAllCustomerFood()
         {
             var cart = await _repository.GetAll()

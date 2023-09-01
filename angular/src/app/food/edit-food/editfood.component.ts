@@ -51,6 +51,7 @@ export class editfoodComponent extends AppComponentBase implements OnInit {
         this.category = result.items;
       }
     ); 
+    
     this._foodService.getType().subscribe(
       result => {
         this.types = result.items;
