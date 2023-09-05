@@ -18,6 +18,7 @@ import {
   CustomerServiceProxy,
   CreateOrderDto,
   OrderServiceProxy,
+  OrderDto,
 } from "@shared/service-proxies/service-proxies";
 import * as moment from "moment";
 import { AbpSessionService } from "abp-ng2-module";
@@ -31,7 +32,8 @@ export class viewOrderComponent extends AppComponentBase implements OnInit {
   saving = false;
   food = new FoodDto();
   order = new CreateOrderDto();
-  dateNow : Date = new Date();;
+  dateNow: Date = new Date();
+  Orders: OrderDto[] = [];
   id: number;
   generatedNumber = Guid;
   orderQuantity = 1;
@@ -56,7 +58,6 @@ export class viewOrderComponent extends AppComponentBase implements OnInit {
     }
   }
 
-
   AddToCart(id: number): void {
     this.saving = true;
     this.order.dateOrdered = moment(this.dateNow);
@@ -65,21 +66,26 @@ export class viewOrderComponent extends AppComponentBase implements OnInit {
     this.order.foodId = id;
     this.order.status = 1;
 
-    this._CustomerService
-      .get(this._sessionService.userId)
-      .subscribe((result) => {
-        this.order.customerId = result.id;
-
-        this._OrderService.create(this.order).subscribe(
-          () => {
-            this.notify.info(this.l("Added to cart"));
-            this.bsModalRef.hide();
-            this.onSave.emit();
-          },
-          () => {
-            this.saving = false;
-          }
-        );
-      });
+    this._OrderService.getAllFoodAndStatus(this.food.id).subscribe((result) => {
+      if (this.food.id == result.foodId && result.status == 1 && this.food.size == result.size) {
+        this.notify.info(this.l("Food is already to cart"));
+      } else {
+        this._CustomerService
+          .get(this._sessionService.userId)
+          .subscribe((result) => {
+            this.order.customerId = result.id;
+            this._OrderService.create(this.order).subscribe(
+              () => {
+                this.notify.info(this.l("Added to cart"));
+                this.bsModalRef.hide();
+                this.onSave.emit();
+              },
+              () => {
+                this.saving = false;
+              }
+            );
+          });
+      }
+    });
   }
 }

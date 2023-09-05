@@ -87,8 +87,8 @@ export class cartComponent extends PagedListingComponentBase<OrderDto> {
     const Order = new OrderDto();
     Order.id = order.id;
     Order.foodId = order.foodId;
-    Order.status = order.status;
     Order.size = order.size;
+    Order.status = 2;
     Order.qty = order.qty;
     Order.customerId = order.customerId;
     Order.dateOrdered = moment(this.dateToday);

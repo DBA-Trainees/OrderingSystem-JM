@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Customers
 {
-    public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, int, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>, ICustomerAppService
+    public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, long, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>, ICustomerAppService
     {
         private readonly IRepository<Division, int> _divisionRepository;
-        private readonly IRepository<Customer, int> _repository;
+        private readonly IRepository<Customer, long> _repository;
         private readonly IRepository<User, long> _userrepository;
-        public CustomerAppService(IRepository<Customer, int> repository, IRepository<Division, int> divisionRepository) : base(repository)
+        public CustomerAppService(IRepository<Customer, long> repository, IRepository<Division, int> divisionRepository) : base(repository)
         {
             _divisionRepository = divisionRepository;
             _repository = repository;
+            //_userrepository = userrepository; , IRepository<User, long> userrepository
         }
       
 
@@ -29,7 +30,7 @@ namespace OrderingSystem.Customers
             return base.CreateAsync(input);
         }
 
-        public override Task DeleteAsync(EntityDto<int> input)
+        public override Task DeleteAsync(EntityDto<long> input)
         {
             return base.DeleteAsync(input);
         }
@@ -39,7 +40,7 @@ namespace OrderingSystem.Customers
             return base.GetAllAsync(input);
         }
 
-        public override Task<CustomerDto> GetAsync(EntityDto<int> input)
+        public override Task<CustomerDto> GetAsync(EntityDto<long> input)
         {
             return base.GetAsync(input);
         }

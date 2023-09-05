@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OrderingSystem.Customers
 {
-    public interface ICustomerAppService : IAsyncCrudAppService<CustomerDto, int, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>
+    public interface ICustomerAppService : IAsyncCrudAppService<CustomerDto, long, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>
     {
         Task<PagedResultDto<DivisionDto>> GetDivision();
         Task<PagedResultDto<UserDto>> GetUser();

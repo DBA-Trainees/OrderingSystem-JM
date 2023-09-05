@@ -2687,6 +2687,62 @@ export class OrderServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getAllFoodAndStatus(id: number | undefined): Observable<Order> {
+        let url_ = this.baseUrl + "/api/services/app/Order/GetAllFoodAndStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllFoodAndStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllFoodAndStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<Order>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<Order>;
+        }));
+    }
+
+    protected processGetAllFoodAndStatus(response: HttpResponseBase): Observable<Order> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Order.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -7055,6 +7111,113 @@ export class IsTenantAvailableOutput implements IIsTenantAvailableOutput {
 export interface IIsTenantAvailableOutput {
     state: TenantAvailabilityState;
     tenantId: number | undefined;
+}
+
+export class Order implements IOrder {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    customerId: number | undefined;
+    customer: Customer;
+    foodId: number | undefined;
+    food: Food;
+    size: string | undefined;
+    qty: number;
+    status: number | undefined;
+    orderNumber: string | undefined;
+    dateOrdered: moment.Moment;
+
+    constructor(data?: IOrder) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.customerId = _data["customerId"];
+            this.customer = _data["customer"] ? Customer.fromJS(_data["customer"]) : <any>undefined;
+            this.foodId = _data["foodId"];
+            this.food = _data["food"] ? Food.fromJS(_data["food"]) : <any>undefined;
+            this.size = _data["size"];
+            this.qty = _data["qty"];
+            this.status = _data["status"];
+            this.orderNumber = _data["orderNumber"];
+            this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Order {
+        data = typeof data === 'object' ? data : {};
+        let result = new Order();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["customerId"] = this.customerId;
+        data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
+        data["foodId"] = this.foodId;
+        data["food"] = this.food ? this.food.toJSON() : <any>undefined;
+        data["size"] = this.size;
+        data["qty"] = this.qty;
+        data["status"] = this.status;
+        data["orderNumber"] = this.orderNumber;
+        data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
+        return data;
+    }
+
+    clone(): Order {
+        const json = this.toJSON();
+        let result = new Order();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOrder {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    customerId: number | undefined;
+    customer: Customer;
+    foodId: number | undefined;
+    food: Food;
+    size: string | undefined;
+    qty: number;
+    status: number | undefined;
+    orderNumber: string | undefined;
+    dateOrdered: moment.Moment;
 }
 
 export class OrderDto implements IOrderDto {

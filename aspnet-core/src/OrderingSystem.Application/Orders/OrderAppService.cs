@@ -5,8 +5,10 @@ using Abp.Runtime.Session;
 using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
+using OrderingSystem.Foods.Dto;
 using OrderingSystem.Orders.Dto;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +26,7 @@ namespace OrderingSystem.Orders
 
         }
         public override Task<OrderDto> CreateAsync(CreateOrderDto input)
-            {
+        {
             return base.CreateAsync(input);
         }
 
@@ -59,6 +61,26 @@ namespace OrderingSystem.Orders
 
             return new PagedResultDto<OrderDto>(order.Count(), order);
         }
+        public async Task<OrderDto> Checkout(OrderDto input)
+        {
+            var order = new Order();
+            var ordernumber = Guid.NewGuid();
+
+            foreach (var item in input.Orders)
+            {
+                order = ObjectMapper.Map<Order>(item);
+                order.Id = item.Id;
+                order.DateOrdered = item.DateOrdered.ToLocalTime();
+                order.OrderNumber = ordernumber;
+                await _repository.UpdateAsync(order);
+
+                var food = await _foodrepository.GetAsync(item.FoodId);
+                food.Qty -= order.Qty;
+                await _foodrepository.UpdateAsync(food);
+
+            }
+            return base.MapToEntityDto(order);
+        }
 
         public async Task<PagedResultDto<OrderDto>> GetAllOrders(PagedOrderResultRequestDto input)
         {
@@ -70,27 +92,16 @@ namespace OrderingSystem.Orders
 
             return new PagedResultDto<OrderDto>(order.Count(), order);
         }
-
-        public async Task<OrderDto> Checkout(OrderDto input)
+     
+        public async Task<Order> GetAllFoodAndStatus(int id)
         {
-            var order = new Order();
-            var ordernumber = Guid.NewGuid();
+            var order = await _repository.GetAll()
+                .Include(x => x.Food)
+                .Where(x => x.Food.Id == id)
+                .Select(x => ObjectMapper.Map<Order>(x))
+                .FirstOrDefaultAsync();
 
-            foreach (var item in input.Orders)
-            {
-                order = ObjectMapper.Map<Order>(item);
-                order.Id = item.Id;
-                order.DateOrdered = item.DateOrdered.ToLocalTime();
-                order.Status = 2;
-                order.OrderNumber = ordernumber;
-                await _repository.UpdateAsync(order);
-
-                var food = await _foodrepository.GetAsync(item.FoodId);
-                food.Qty -= order.Qty;
-                await _foodrepository.UpdateAsync(food);
-
-            }
-            return base.MapToEntityDto(order);
+            return order;
 
         }
     }

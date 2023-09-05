@@ -54,7 +54,6 @@ namespace OrderingSystem.Foods
         
         public async Task<PagedResultDto<CategoriesDto>> GetCategory()
         {
-            //To view the innerjoined data in dropdown
             var query = await _categoryrepository.GetAll()
                 .Select(x => ObjectMapper.Map<CategoriesDto>(x))
                 .ToListAsync();
@@ -81,21 +80,6 @@ namespace OrderingSystem.Foods
 
             return new PagedResultDto<FoodDto>(food.Count(), food);
         }
-
-        //public async Task<Food> UpdateIsCart(EntityDto input)
-        //{
-        //   var cart = await _repository.GetAsync(input.Id); 
-        //    if(cart.isCart == false)
-        //    {
-        //        cart.isCart = true;
-        //    }
-        //    else
-        //    {
-        //        cart.isCart = false;
-        //    }
-        //    var UpdateCart = await _repository.UpdateAsync(cart);
-        //    return UpdateCart;
-        //}
 
     }
 }

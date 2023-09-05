@@ -14,4 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OrderingSystem.Core\OrderingSystem.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Carts\Dto\" />
+  </ItemGroup>
 </Project>

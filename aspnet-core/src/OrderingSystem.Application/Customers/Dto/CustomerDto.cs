@@ -13,7 +13,7 @@ namespace OrderingSystem.Customers.Dto
 {
     [AutoMapFrom(typeof(Customer))]
     [AutoMapTo(typeof(Customer))]   
-    public class CustomerDto : EntityDto<int>
+    public class CustomerDto : EntityDto<long>
     {
         public string Name { get; set; }
         public int DivisionId { get; set; }
