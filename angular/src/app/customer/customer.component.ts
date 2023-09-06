@@ -66,7 +66,7 @@ export class customerComponent extends PagedListingComponentBase<CustomerDto> {
 
   protected delete(customer: CustomerDto): void {
     abp.message.confirm(
-      this.l("", customer.name),
+      this.l("", customer),
       undefined,
       (result: boolean) => {
         if (result) {
@@ -88,7 +88,7 @@ export class customerComponent extends PagedListingComponentBase<CustomerDto> {
     request.isActive = this.isActive;
 
     this._customerService
-      .getAllCustomerWithDivision(
+      .getAllDivisionAndUser(
         request.keyword,
         request.isActive,
         request.skipCount,

@@ -62,7 +62,7 @@
                   <tr>
                     <tr *ngFor="let order of Orders">
                     <td>{{ order.id }}</td>
-                    <td>{{ order.customer?.name }}</td>
+                    <td>{{ order.customer?.user?.name }}</td>
                     <td>{{ order.food?.name }}</td>
                     <td>{{ order.dateOrdered }}</td>
                     <td *ngIf="order.status == 1 ">

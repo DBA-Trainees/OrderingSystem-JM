@@ -9,9 +9,8 @@ namespace OrderingSystem.Customers.Dto
     [AutoMapTo(typeof(Customer))]
     public class CreateCustomerDto: EntityDto<long>
     {
-        public string Name { get; set; }
         public int DivisionId { get; set; } //FK
-        public int UserId { get; set; } //FK
+        public long UserId { get; set; } //FK
 
 
     }

@@ -17,11 +17,11 @@ namespace OrderingSystem.Customers
         private readonly IRepository<Division, int> _divisionRepository;
         private readonly IRepository<Customer, long> _repository;
         private readonly IRepository<User, long> _userrepository;
-        public CustomerAppService(IRepository<Customer, long> repository, IRepository<Division, int> divisionRepository) : base(repository)
+        public CustomerAppService(IRepository<Customer, long> repository, IRepository<Division, int> divisionRepository, IRepository<User, long> userrepository) : base(repository)
         {
             _divisionRepository = divisionRepository;
             _repository = repository;
-            //_userrepository = userrepository; , IRepository<User, long> userrepository
+            _userrepository = userrepository;
         }
       
 
@@ -69,14 +69,25 @@ namespace OrderingSystem.Customers
             return new PagedResultDto<UserDto>(query.Count(), query);
         }
 
-        public async Task<PagedResultDto<CustomerDto>> GetAllCustomerWithDivision(PagedCustomerResultRequestDto input)
+        public async Task<PagedResultDto<CustomerDto>> GetAllDivisionAndUser(PagedCustomerResultRequestDto input)
         {
             var customer = await _repository.GetAll()
                 .Include(x => x.Division)
+                .Include(x => x.User)
                 .Select(x => ObjectMapper.Map<CustomerDto>(x))
                 .ToListAsync();
 
             return new PagedResultDto<CustomerDto>(customer.Count(), customer);
+        }
+        public async Task<Customer> GetCustomerAndUser(int id)  
+        {
+            var c = await _repository.GetAll()
+                .Where(x => x.UserId == id)
+                .Select(x => ObjectMapper.Map<Customer>(x))
+                .FirstOrDefaultAsync();
+
+            return c;
+
         }
     }
 

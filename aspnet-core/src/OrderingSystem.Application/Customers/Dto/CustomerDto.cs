@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using OrderingSystem.Authorization.Users;
 using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Users.Dto;
@@ -15,10 +16,9 @@ namespace OrderingSystem.Customers.Dto
     [AutoMapTo(typeof(Customer))]   
     public class CustomerDto : EntityDto<long>
     {
-        public string Name { get; set; }
         public int DivisionId { get; set; }
         public DivisionDto Division { get; set; }
-        public int UserId { get; set; }
-        public UserDto User { get; set; }
+        public long UserId { get; set; }
+        public User User { get; set; }
     }
 }

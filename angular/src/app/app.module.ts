@@ -63,7 +63,7 @@ import { edittypeComponent } from './type/edit-type/edittype.component';
 import { editcustomerComponent } from './customer/edit-customer/editcustomer.component';
 import { editfoodComponent } from './food/edit-food/editfood.component';
 
-import { CartServiceProxy, CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import {  CategoriesServiceProxy, CustomerServiceProxy, DivisionServiceProxy, FoodServiceProxy, OrderServiceProxy, TypeServiceProxy, UserServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
 
@@ -142,7 +142,7 @@ import { CartServiceProxy, CategoriesServiceProxy, CustomerServiceProxy, Divisio
         TypeServiceProxy,
         CustomerServiceProxy,
         OrderServiceProxy,
-        CartServiceProxy,
+        UserServiceProxy,
         ]
 })
 export class AppModule {}

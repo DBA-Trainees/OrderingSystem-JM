@@ -4,15 +4,10 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-  CartDto,
-  CartDtoPagedResultDto,
-  CartServiceProxy,
   OrderDto,
   OrderDtoPagedResultDto,
   OrderServiceProxy,
 } from "@shared/service-proxies/service-proxies";
-import { result } from "lodash-es";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { finalize } from "rxjs";
 
 class PagedOrderResultRequestDto extends PagedRequestDto {
@@ -35,7 +30,6 @@ export class orderComponent extends PagedListingComponentBase<OrderDto> {
 
   constructor(injector: Injector,
     private _OrderService: OrderServiceProxy,
-    // private _orderService: OrderServiceProxy
      ) {
     super(injector);
   }
@@ -61,6 +55,7 @@ export class orderComponent extends PagedListingComponentBase<OrderDto> {
       )
       .subscribe((result: OrderDtoPagedResultDto) => {
         this.Orders = result.items;
+        console.log(this.Orders)
         this.showPaging(result, pageNumber);
       });
   }

@@ -3,6 +3,7 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
 using Microsoft.EntityFrameworkCore;
+using OrderingSystem.Authorization.Users;
 using OrderingSystem.Divisions.Dto;
 using OrderingSystem.Entities;
 using OrderingSystem.Foods.Dto;
@@ -17,13 +18,14 @@ namespace OrderingSystem.Orders
     public class OrderAppService : AsyncCrudAppService<Order, OrderDto, int, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
     {
         private readonly IRepository<Order, int> _repository;
+        private readonly IRepository<Customer, long> _customerRepository;
         private readonly IRepository<Food, int> _foodrepository;
 
-        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodrepository) : base(repository)
+        public OrderAppService(IRepository<Order, int> repository, IRepository<Food, int> foodrepository, IRepository<Customer, long> customerRepository) : base(repository)
         {
             _repository = repository;
             _foodrepository = foodrepository;
-
+            _customerRepository = customerRepository;
         }
         public override Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
@@ -85,10 +87,12 @@ namespace OrderingSystem.Orders
         public async Task<PagedResultDto<OrderDto>> GetAllOrders(PagedOrderResultRequestDto input)
         {
             var order = await _repository.GetAll()
-                .Include(x => x.Customer)
                 .Include(x => x.Food)
+                .Include(x => x.Customer)
+                .ThenInclude(x => x.User)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
+         
 
             return new PagedResultDto<OrderDto>(order.Count(), order);
         }

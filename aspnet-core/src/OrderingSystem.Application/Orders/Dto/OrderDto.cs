@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using OrderingSystem.Authorization.Users;
 using OrderingSystem.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace OrderingSystem.Orders.Dto
     [AutoMapTo(typeof(Order))]   
     public class OrderDto : EntityDto<int>
     {
-        public int CustomerId { get; set; }
+        public long CustomerId { get; set; }
         public Customer Customer { get; set; }
         public int FoodId { get; set; }
         public Food Food { get; set; }

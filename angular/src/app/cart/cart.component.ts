@@ -62,6 +62,7 @@ export class cartComponent extends PagedListingComponentBase<OrderDto> {
       )
       .subscribe((result: OrderDtoPagedResultDto) => {
         this.Orders = result.items;
+        console.log(this.Orders)
         this.showPaging(result, pageNumber);
       });
   }

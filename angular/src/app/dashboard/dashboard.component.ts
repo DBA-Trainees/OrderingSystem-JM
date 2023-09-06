@@ -6,8 +6,6 @@ import {
   PagedRequestDto,
 } from "@shared/paged-listing-component-base";
 import {
-  CartServiceProxy,
-  CreateCartDto,
   CustomerServiceProxy,
   FoodDto,
   FoodDtoPagedResultDto,
@@ -37,7 +35,6 @@ export class dashboardComponent extends PagedListingComponentBase<FoodDto> {
   foods: FoodDto[] = [];
   id: number;
 
-  AddToCart = new CreateCartDto();
   keyword = "";
   isActive: boolean;
   advancedFiltersVisible = false;
@@ -48,7 +45,6 @@ export class dashboardComponent extends PagedListingComponentBase<FoodDto> {
     injector: Injector,
     private _foodService: FoodServiceProxy,
     private _customerService: CustomerServiceProxy,
-    private _cartService: CartServiceProxy,
     private bsModalRef: BsModalRef,
     private _sessionService: AbpSessionService,
     private _modalService: BsModalService,

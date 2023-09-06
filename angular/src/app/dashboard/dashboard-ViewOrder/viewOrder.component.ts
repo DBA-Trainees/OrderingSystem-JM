@@ -68,7 +68,7 @@ export class viewOrderComponent extends AppComponentBase implements OnInit {
 
     this._OrderService.getAllFoodAndStatus(this.food.id).subscribe((result) => {
       if (this.food.id == result.foodId && result.status == 1 && this.food.size == result.size) {
-        this.notify.info(this.l("Food is already to cart"));
+        this.notify.info(this.l("Food is already added to cart"));
       } else {
         this._CustomerService
           .get(this._sessionService.userId)
