@@ -15,6 +15,7 @@ namespace OrderingSystem.Orders.Dto
         public string Size { get; set; }
         public int? Qty { get; set; }
         public int? Status { get; set; }
+        public double? Amount { get; set; }
         public Guid? OrderNumber { get; set; }
         public List<OrderDto> Orders { get; set; }
         public DateTime? DateOrdered { get; set; }

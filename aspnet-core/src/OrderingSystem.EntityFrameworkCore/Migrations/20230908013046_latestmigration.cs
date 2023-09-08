@@ -45,7 +45,6 @@ namespace OrderingSystem.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DivisionId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<long>(type: "bigint", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -77,12 +76,12 @@ namespace OrderingSystem.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(type: "int", nullable: true),
-                    CustomerId1 = table.Column<long>(type: "bigint", nullable: true),
+                    CustomerId = table.Column<long>(type: "bigint", nullable: true),
                     FoodId = table.Column<int>(type: "int", nullable: true),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Qty = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<double>(type: "float", nullable: true),
                     OrderNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DateOrdered = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -97,8 +96,8 @@ namespace OrderingSystem.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId1",
-                        column: x => x.CustomerId1,
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -129,9 +128,9 @@ namespace OrderingSystem.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId1",
+                name: "IX_Orders_CustomerId",
                 table: "Orders",
-                column: "CustomerId1");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_FoodId",

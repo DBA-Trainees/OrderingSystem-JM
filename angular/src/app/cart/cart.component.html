@@ -19,7 +19,9 @@
                 <h5 class="bold">{{Order.food?.name}}</h5>
                 <p class="text-muted"> Qt:<b> {{Order.qty}} item</b></p>
                 <p class="text-muted"> Size: <b>{{Order.size}} item</b></p>
-                <h4 class="mb-3"> $ {{Order.food?.price}} <span class="small text-muted"> via (COD) </span></h4>
+
+                <h4 class="mb-3"> $ {{Order.amount}} <span class="small text-muted"> via (COD) </span></h4>
+                
                 <p class="text-muted">Order Status on: <span class="text-body"><b>On Cart</b>, Today</span></p>
                 <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(Order)">
                   <i class="fas fa-trash"></i>

@@ -5014,6 +5014,7 @@ export class CreateOrderDto implements ICreateOrderDto {
     size: string | undefined;
     qty: number | undefined;
     status: number | undefined;
+    amount: number | undefined;
     orderNumber: string | undefined;
     orders: OrderDto[] | undefined;
     dateOrdered: moment.Moment | undefined;
@@ -5035,6 +5036,7 @@ export class CreateOrderDto implements ICreateOrderDto {
             this.size = _data["size"];
             this.qty = _data["qty"];
             this.status = _data["status"];
+            this.amount = _data["amount"];
             this.orderNumber = _data["orderNumber"];
             if (Array.isArray(_data["orders"])) {
                 this.orders = [] as any;
@@ -5060,6 +5062,7 @@ export class CreateOrderDto implements ICreateOrderDto {
         data["size"] = this.size;
         data["qty"] = this.qty;
         data["status"] = this.status;
+        data["amount"] = this.amount;
         data["orderNumber"] = this.orderNumber;
         if (Array.isArray(this.orders)) {
             data["orders"] = [];
@@ -5085,6 +5088,7 @@ export interface ICreateOrderDto {
     size: string | undefined;
     qty: number | undefined;
     status: number | undefined;
+    amount: number | undefined;
     orderNumber: string | undefined;
     orders: OrderDto[] | undefined;
     dateOrdered: moment.Moment | undefined;
@@ -6448,6 +6452,7 @@ export class Order implements IOrder {
     size: string | undefined;
     qty: number;
     status: number | undefined;
+    amount: number | undefined;
     orderNumber: string | undefined;
     dateOrdered: moment.Moment;
 
@@ -6477,6 +6482,7 @@ export class Order implements IOrder {
             this.size = _data["size"];
             this.qty = _data["qty"];
             this.status = _data["status"];
+            this.amount = _data["amount"];
             this.orderNumber = _data["orderNumber"];
             this.dateOrdered = _data["dateOrdered"] ? moment(_data["dateOrdered"].toString()) : <any>undefined;
         }
@@ -6506,6 +6512,7 @@ export class Order implements IOrder {
         data["size"] = this.size;
         data["qty"] = this.qty;
         data["status"] = this.status;
+        data["amount"] = this.amount;
         data["orderNumber"] = this.orderNumber;
         data["dateOrdered"] = this.dateOrdered ? this.dateOrdered.toISOString() : <any>undefined;
         return data;
@@ -6535,6 +6542,7 @@ export interface IOrder {
     size: string | undefined;
     qty: number;
     status: number | undefined;
+    amount: number | undefined;
     orderNumber: string | undefined;
     dateOrdered: moment.Moment;
 }
@@ -6542,12 +6550,13 @@ export interface IOrder {
 export class OrderDto implements IOrderDto {
     id: number;
     customerId: number;
-    customer: Customer;
+    customer: CustomerDto;
     foodId: number;
-    food: Food;
+    food: FoodDto;
     size: string | undefined;
     qty: number;
     status: number | undefined;
+    amount: number | undefined;
     orderNumber: string | undefined;
     orders: OrderDto[] | undefined;
     dateOrdered: moment.Moment;
@@ -6565,12 +6574,13 @@ export class OrderDto implements IOrderDto {
         if (_data) {
             this.id = _data["id"];
             this.customerId = _data["customerId"];
-            this.customer = _data["customer"] ? Customer.fromJS(_data["customer"]) : <any>undefined;
+            this.customer = _data["customer"] ? CustomerDto.fromJS(_data["customer"]) : <any>undefined;
             this.foodId = _data["foodId"];
-            this.food = _data["food"] ? Food.fromJS(_data["food"]) : <any>undefined;
+            this.food = _data["food"] ? FoodDto.fromJS(_data["food"]) : <any>undefined;
             this.size = _data["size"];
             this.qty = _data["qty"];
             this.status = _data["status"];
+            this.amount = _data["amount"];
             this.orderNumber = _data["orderNumber"];
             if (Array.isArray(_data["orders"])) {
                 this.orders = [] as any;
@@ -6598,6 +6608,7 @@ export class OrderDto implements IOrderDto {
         data["size"] = this.size;
         data["qty"] = this.qty;
         data["status"] = this.status;
+        data["amount"] = this.amount;
         data["orderNumber"] = this.orderNumber;
         if (Array.isArray(this.orders)) {
             data["orders"] = [];
@@ -6619,12 +6630,13 @@ export class OrderDto implements IOrderDto {
 export interface IOrderDto {
     id: number;
     customerId: number;
-    customer: Customer;
+    customer: CustomerDto;
     foodId: number;
-    food: Food;
+    food: FoodDto;
     size: string | undefined;
     qty: number;
     status: number | undefined;
+    amount: number | undefined;
     orderNumber: string | undefined;
     orders: OrderDto[] | undefined;
     dateOrdered: moment.Moment;

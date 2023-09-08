@@ -65,14 +65,14 @@ export class viewOrderComponent extends AppComponentBase implements OnInit {
     this.order.size = this.food.size;
     this.order.foodId = id;
     this.order.status = 1;
+    this.order.amount = this.order.qty * this.food.price;
 
     this._OrderService.getAllFoodAndStatus(this.food.id).subscribe((result) => {
       if (this.food.id == result.foodId && result.status == 1 && this.food.size == result.size) {
         this.notify.info(this.l("Food is already added to cart"));
       } else {
-        this._CustomerService
-          .get(this._sessionService.userId)
-          .subscribe((result) => {
+        this._CustomerService.getCustomerAndUser(this._sessionService.userId).subscribe(
+          (result) => {
             this.order.customerId = result.id;
             this._OrderService.create(this.order).subscribe(
               () => {

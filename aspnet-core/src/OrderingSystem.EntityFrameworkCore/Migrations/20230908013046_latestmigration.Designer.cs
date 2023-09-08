@@ -12,7 +12,7 @@ using OrderingSystem.EntityFrameworkCore;
 namespace OrderingSystem.Migrations
 {
     [DbContext(typeof(OrderingSystemDbContext))]
-    [Migration("20230905030719_latestmigration")]
+    [Migration("20230908013046_latestmigration")]
     partial class latestmigration
     {
         /// <inheritdoc />
@@ -1645,9 +1645,6 @@ namespace OrderingSystem.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
@@ -1773,16 +1770,16 @@ namespace OrderingSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double?>("Amount")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("CustomerId1")
+                    b.Property<long?>("CustomerId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("DateOrdered")
@@ -1820,7 +1817,7 @@ namespace OrderingSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("FoodId");
 
@@ -2180,7 +2177,7 @@ namespace OrderingSystem.Migrations
                 {
                     b.HasOne("OrderingSystem.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("OrderingSystem.Entities.Food", "Food")
                         .WithMany()
