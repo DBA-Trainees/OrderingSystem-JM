@@ -79,8 +79,8 @@ abp.message.confirm(
     }
   }
 )
-  }
 
+  }
   protected list(
     request: PagedDivisionResultRequestDto,
     pageNumber: number,
@@ -100,4 +100,5 @@ abp.message.confirm(
         this.showPaging(result, pageNumber);
       })
   }
+  
 }

@@ -40,6 +40,44 @@
        
       </div>
         <!-- dito po sa may comment -->
+        
+ <section class="h-100 h-custom" style="background-color: #eee;">
+  <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+    <div class="card-body p-5">
+
+      <p class="lead fw-bold mb-5" style="color: #f37a27;">Purchase Reciept</p>
+
+      <div  class="row">
+        <div class="col mb-3">
+          <p class="small text-muted mb-1">Date</p>
+          <p>{{ Order.dateOrdered}}</p>
+        </div>
+      </div>
+
+      <div *ngFor="let Order of Orders" class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+        <div class="row">
+          <div class="col-md-8 col-lg-9">
+            <p><b>{{ Order.food?.name}}</b></p>
+            <p>Quantity: {{ Order.qty}}</p>
+          </div>
+          <div class="col-md-4 col-lg-3">
+            <p><b>PHP: {{ Order.amount}}</b></p>
+            <!-- multiply orders to its quantity -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-4">
+        <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+          <p class="lead fw-bold mb-0" style="color: #f37a27;">TOTAL</p>
+          <!-- get total price or multiplied orders  -->
+          <p class="lead fw-bold mb-0" style="color: #f37a27;">PHP: {{getAmount(getPlacedOrder(Orders[0]?.orderNumber)) }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
         <div class="card-footer p-4">
           <div class="d-flex justify-content-between">
             <div class="border-start h-100"></div>

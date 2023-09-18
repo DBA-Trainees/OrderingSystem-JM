@@ -107,4 +107,11 @@ export class cartComponent extends PagedListingComponentBase<OrderDto> {
     }
    )
   }
+  getAmount(orders:OrderDto[]): number{
+    return orders.reduce((total, order) => total + order.amount, 0);
+  }
+  
+  getPlacedOrder(orderNumber: string):OrderDto[]{
+    return this.Orders.filter (order => order.orderNumber ==  orderNumber && order.dateOrdered)
+  }
 }
