@@ -14,7 +14,7 @@ class PagedDivisionResultRequestDto extends PagedRequestDto{
 @Component({
   selector: 'app-division',
   templateUrl: './division.component.html',
-  // styleUrls: ['./Division.component.css']
+  styleUrls: ['./division.component.css']
 })
 
 export class divisionComponent extends PagedListingComponentBase <DivisionDto>{

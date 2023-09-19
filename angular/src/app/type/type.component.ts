@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { TypeDto, TypeDtoPagedResultDto, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateTypeDto, TypeDto, TypeDtoPagedResultDto, TypeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs';
 import { edittypeComponent } from './edit-type/edittype.component';
@@ -66,11 +66,13 @@ edittype(types: TypeDto): void {
     abp.message.confirm(
       this.l('', category.name),
       undefined,
+
       (result: boolean) => {
         if(result){
           this._typeService.delete(category.id).subscribe(() => {
             abp.notify.success(this.l('Successfully Deleted'));
             this.refresh();
+          
           })
         }
       }

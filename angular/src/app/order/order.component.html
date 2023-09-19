@@ -49,19 +49,17 @@
                 <!-- <table class="table table-striped table-bordered" [busy]="isTableLoading"> -->
                 <thead class="bg-light">
                   <tr>
-                    <th>{{ "id" | localize }}</th>
                     <th>{{ "Customer name" | localize }}</th>
                     <th>{{ "Customer Order" | localize }}</th>
                     <th>{{ "Date Ordered" | localize }}</th>
                     <th>{{ "Order Status" | localize }}</th>
                    
-                    <th style="width: 170px">{{ "Actions" | localize }}</th>
+                    <!-- <th style="width: 170px">{{ "Actions" | localize }}</th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <tr *ngFor="let order of Orders">
-                    <td>{{ order.id }}</td>
                     <td>{{ order.customer?.user?.name }}</td>
                     <td>{{ order.food?.name }}</td>
                     <td>{{ order.dateOrdered }}</td>
@@ -71,19 +69,7 @@
                       <td *ngIf="order.status == 2 ">
                         Place order
                         </td>
-                        
-                    
-                    <td>
-                      <!-- <button type="button" (click)="editorder(order)" class="btn btn-sm bg-secondary">
-                        <i class="fas fa-pencil-alt"></i>
-                        {{ "Edit" | localize }}
-                      </button> -->
-  
-                      <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(order)">
-                        <i class="fas fa-trash"></i>
-                        {{ "Delete" | localize }} 
-                      </button>
-                    </td>
+                  
                   </tr>
                 </tbody>
               </table>

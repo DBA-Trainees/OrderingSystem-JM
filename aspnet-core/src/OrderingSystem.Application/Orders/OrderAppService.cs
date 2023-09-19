@@ -90,6 +90,7 @@ namespace OrderingSystem.Orders
                 .Include(x => x.Food)
                 .Include(x => x.Customer)
                 .ThenInclude(x => x.User)
+                .Where(x => x.Status == 2)
                 .Select(x => ObjectMapper.Map<OrderDto>(x))
                 .ToListAsync();
          

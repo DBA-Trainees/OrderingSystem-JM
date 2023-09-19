@@ -14,7 +14,7 @@ class PagedFoodResultRequestDto extends PagedRequestDto {
 @Component({
   selector: 'app-food',
   templateUrl: './food.component.html'  ,
-  // styleUrls: ['./food.component.css']
+  styleUrls: ['./food.component.css']
 })
 export class foodComponent extends PagedListingComponentBase <FoodDto> {
   

@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.UI;
 using Microsoft.EntityFrameworkCore;
 using OrderingSystem.Authorization.Users;
 using OrderingSystem.Customers.Dto;
@@ -15,15 +16,17 @@ namespace OrderingSystem.Customers
     public class CustomerAppService : AsyncCrudAppService<Customer, CustomerDto, long, PagedCustomerResultRequestDto, CreateCustomerDto, CustomerDto>, ICustomerAppService
     {
         private readonly IRepository<Division, int> _divisionRepository;
+        private readonly IRepository<Order, int> _orderRepository;
         private readonly IRepository<Customer, long> _repository;
         private readonly IRepository<User, long> _userrepository;
-        public CustomerAppService(IRepository<Customer, long> repository, IRepository<Division, int> divisionRepository, IRepository<User, long> userrepository) : base(repository)
+        public CustomerAppService(IRepository<Customer, long> repository, IRepository<Division, int> divisionRepository, IRepository<User, long> userrepository, IRepository<Order, int> orderRepository) : base(repository)
         {
             _divisionRepository = divisionRepository;
             _repository = repository;
             _userrepository = userrepository;
+            _orderRepository = orderRepository;
         }
-      
+
 
         public override Task<CustomerDto> CreateAsync(CreateCustomerDto input)
         {
@@ -32,7 +35,18 @@ namespace OrderingSystem.Customers
 
         public override Task DeleteAsync(EntityDto<long> input)
         {
-            return base.DeleteAsync(input);
+            var exist = _orderRepository.GetAll()
+              .Where(x => x.CustomerId == input.Id)
+              .FirstOrDefault();
+
+            if (exist == null)
+            {
+                return base.DeleteAsync(input);
+            }
+            else
+            {
+                throw new UserFriendlyException("Customer exist");
+            }
         }
 
         public override Task<PagedResultDto<CustomerDto>> GetAllAsync(PagedCustomerResultRequestDto input)

@@ -1,4 +1,5 @@
 <section>
+  <link href="/assets/assets/css/style.css" rel="stylesheet">
   <div>
     <div class="card">
       <div class="card-header p-4">
@@ -11,7 +12,7 @@
               >
             </p>
             <p class="text-muted mb-0">
-              Place On <span class="fw-bold text-body">{{ dateNow }}</span>
+              Place On <span class="fw-bold text-body">{{ dateNow | date}}</span>
             </p>
           </div>
           <div>
@@ -58,7 +59,7 @@
             </div>
 
             <h4 class="mb-3">
-              ${{ food.price }}
+              PHP {{ food.price }}
               <span class="small text-muted"> via (COD) </span>
             </h4>
 
@@ -80,7 +81,7 @@
     <div class="card-footer p-4">
       <div class="d-flex justify-content-between">
         <div class="border-start h-100"></div>
-        <h5 class="fw-normal mb-0"><a href="#!">Cancel</a></h5>
+        <h5 class="fw-normal mb-0"><a style="color: #f37a27;" href="#!">Cancel</a></h5>
         <div class="border-start h-100"></div>
         <h5 class="fw-normal mb-0">
           <button
@@ -88,7 +89,7 @@
             style="
               border: transparent;
               background-color: transparent;
-              color: #007bff;
+              color: black;
             "
             (click)="AddToCart(id)"
           >
